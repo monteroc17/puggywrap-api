@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<%- include('../includes/head.ejs') %>
 
-    <!-- Fonts import -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Sigmar+One" rel="stylesheet">
-
-    <link rel="stylesheet" href="../../../public/stylesheets/getting_started.css">
-
-    <title>PuggyWrap - Getting Started</title>
+    <link rel="stylesheet" href="/stylesheets/getting_started.css">
 </head>
 <body>
+    <%- include('../includes/navigation.ejs') %>
     <div id="main-container">
 
         <div id="container1">
@@ -26,7 +18,7 @@
             </div>
 
             <div id="logo-container">
-                <img src="../../../public/images/puggywrap.png" alt="Puggy Wrap Logo" id="logo">
+                <img src="/images/puggywrap.png" alt="Puggy Wrap Logo" id="logo">
             </div>
         </div>
 
@@ -38,7 +30,7 @@
         <div id="container3">
             <div class="step">
                 <div class="step-img-container">
-                    <img src="../../../public/images/one.png" alt="Step 1 image" class="step-img">
+                    <img src="/images/one.png" alt="Step 1 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">
@@ -52,7 +44,7 @@
 
             <div class="step">
                 <div class="step-img-container">
-                    <img src="../../../public/images/two.png" alt="Step 2 image" class="step-img">
+                    <img src="/public/images/two.png" alt="Step 2 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">
@@ -66,7 +58,7 @@
 
             <div class="step">
                 <div class="step-img-container">
-                    <img src="../../../public/images/three.png" alt="Step 3 image" class="step-img">
+                    <img src="/images/three.png" alt="Step 3 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">
@@ -80,7 +72,7 @@
 
             <div class="step">
                 <div class="step-img-container">
-                    <img src="../../../public/images/four.png" alt="Step 4 image" class="step-img">
+                    <img src="/images/four.png" alt="Step 4 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">
@@ -94,7 +86,7 @@
 
             <div class="step">
                 <div class="step-img-container">
-                    <img src="../../../public/images/five.png" alt="Step 5 image" class="step-img">
+                    <img src="/images/five.png" alt="Step 5 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">
@@ -108,7 +100,7 @@
 
             <div class="step">
                 <div class="step-img-container">
-                    <img src="../../../public/images/six.png" alt="Step 6 image" class="step-img">
+                    <img src="/images/six.png" alt="Step 6 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">
@@ -123,5 +115,4 @@
         </div>
 
     </div>
-</body>
-</html>
+<%- include('../includes/end.ejs') %>

@@ -5,22 +5,26 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const csrf = require('csurf');
 
+const errorController = require('./app/controllers/error');
+
 
 const app = express();
 
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', 'app/views');
 
 /**ROUTES */
-const homeRoutes = require('./routes/home');
+const homeRoutes = require('./app/routes/home');
+const adminRoutes = require('./app/routes/admin')
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(homeRoutes);
+app.use('/admin', adminRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-
+app.use(errorController.get404);
 
 app.listen(3000);
