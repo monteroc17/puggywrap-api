@@ -28,3 +28,5 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(errorController.get404);
 
 app.listen(3000);
+
+console.log('Listening on port 3000');
