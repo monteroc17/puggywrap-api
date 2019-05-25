@@ -6,7 +6,7 @@ const session = require('express-session');
 const csrf = require('csurf');
 
 const errorController = require('./app/controllers/error');
-
+const sequelize = require('./app/util/database');
 
 const app = express();
 
@@ -27,6 +27,11 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(errorController.get404);
 
-app.listen(3000);
-
-console.log('Listening on port 3000');
+sequelize.sync() //Creates tables in DB based on the models
+    .then(result => {
+        console.log('CONNECTION TO DATABASE SUCCESFUL');
+        console.log(result);
+        app.listen(3000);
+        console.log('Listening on port 3000');
+    })
+    .catch(err => console.log(err));
