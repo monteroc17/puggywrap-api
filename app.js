@@ -30,7 +30,6 @@ app.use(errorController.get404);
 sequelize.sync() //Creates tables in DB based on the models
     .then(result => {
         console.log('CONNECTION TO DATABASE SUCCESFUL');
-        console.log(result);
         app.listen(3000);
         console.log('Listening on port 3000');
     })
