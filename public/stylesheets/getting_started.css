@@ -1,0 +1,115 @@
+div#main-container {
+    height: 3000px;
+    width: 90%;
+}
+
+
+/* ========== First container ========== */
+
+div#container1 {
+    height: 210px;
+    width: 100%;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div#logo-container {
+    height: 210px;
+    width: 210px;
+}
+
+img#logo {
+    height: 100%;
+    width: 100%;
+}
+
+div#title {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+span#api-name {
+    font-family: 'Sigmar One', cursive;
+    font-size: 55px;
+    color: #4b4b4b;
+}
+
+span#message {
+    font-size: 45px;
+    color: #6a6a6a;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+
+/* ========== Second container ========== */
+
+div#container2 {
+    height: 60px;
+    width: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #a5a5a5;
+    text-align: center;
+}
+
+
+/* ========== Third container ========== */
+
+div#container3 {
+    height: 1200px;
+    width: 100%;
+    background-color: #f8f8f8;
+}
+
+
+/* Every Step */
+
+.step {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.step-img-container {
+    height: 96px;
+    width: 96px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.step-img {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 95%;
+    width: 95%;
+}
+
+.step-description-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 96px;
+    width: 92%;
+}
+
+.step-title {
+    font-size: 28px;
+    color: #696969;
+    font-weight: bold;
+}
+
+.step-description {
+    font-size: 18px;
+    color: #7e7e7e;
+}
