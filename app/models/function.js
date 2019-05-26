@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
 const ApiFunction = sequelize.define('function', {
-    id: {
+    function_id: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
@@ -16,10 +16,12 @@ const ApiFunction = sequelize.define('function', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    code: {
-        type: Sequelize.STRING,
+    function_code: {
+        type: Sequelize.TEXT,
         allowNull: false
     }
 });
+
+
 
 module.exports = ApiFunction;

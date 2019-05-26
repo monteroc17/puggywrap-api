@@ -27,7 +27,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(errorController.get404);
 
-sequelize.sync() //Creates tables in DB based on the models
+sequelize.sync({ force: true }) //Creates tables in DB based on the models
     .then(result => {
         console.log('CONNECTION TO DATABASE SUCCESFUL');
         app.listen(3000);
