@@ -6,7 +6,8 @@ const ApiFunction = sequelize.define('function', {
     function_id: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     name: {
         type: Sequelize.STRING,
