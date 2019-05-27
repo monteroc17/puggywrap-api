@@ -11,7 +11,8 @@ const Tag = sequelize.define('tag', {
     },
     name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 });
 
