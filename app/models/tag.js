@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
 const Tag = sequelize.define('tag', {
-    tag_id: {
+    id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,

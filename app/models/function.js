@@ -1,10 +1,11 @@
 const Sequelize = require('sequelize');
-
 const sequelize = require('../util/database');
 
+const User = require('./user');
+
 const ApiFunction = sequelize.define('function', {
-    function_id: {
-        type: Sequelize.STRING,
+    id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
@@ -23,6 +24,7 @@ const ApiFunction = sequelize.define('function', {
     }
 });
 
-
+ApiFunction.belongsTo(User);
+User.hasMany(ApiFunction);
 
 module.exports = ApiFunction;
