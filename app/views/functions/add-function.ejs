@@ -1,0 +1,43 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <h1>Add Function</h1>
+            <% if (errorMessage) { %>
+                <div class="user-message user-message--error">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+                    <div class="grid">
+                        <form action="/admin/add_function" method="post">
+                            <div class="form-control">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name">
+                            </div>
+                            <div class="form-control">
+                                <label for="description">Description</label>
+                                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                            </div>
+                            <div class="form-control">
+                                <label for="description">Code</label>
+                                <textarea name="function_code" id="function_code" cols="30" rows="10"></textarea>
+                            </div>
+                            <div class="form-control">
+                                <label for="name">Tags (each one separated by a comma)</label>
+                                <input type="text" name="tags" id="tags">
+                            </div>
+                            <div class="form-control">
+                                <select name="dependencies" id="dependencies" multiple>
+                                    <option value="2">Code #2</option>
+                                    <option value="3">Code #3</option>
+                                    <option value="4">Code #4</option>
+                                </select>
+                            </div>
+                            <button class="btn" type="submit">Add Function</button>
+                        </form>
+                    </div>
+
+
+                    <%- include('../includes/end.ejs') %>
