@@ -62,16 +62,23 @@ exports.postAddFunction = async(req, res, next) => {
     });
     //Look for dependencies
     if (dependencies) { // are there dependencies?
-        // Add dependencies to intermediate table
-        dependencies.forEach(async dependency => {
-            newDep = await Dependency.create({
-                parent_id: 1,
-                dependency_id: dependency
+        if (typeof dependencies === 'array') {
+            // Add dependencies to intermediate table
+            dependencies.forEach(async dependency => {
+                newDep = await Dependency.create({
+                    parent_id: newFunction.id, // get current function id
+                    dependency_id: dependency
+                });
             });
-            if (!newDep) {
-                throw new Error('An error occured while adding dependencies');
-            }
-        });
+        } else {
+            newDep = await Dependency.create({
+                parent_id: newFunction.id, // get current function id
+                dependency_id: dependencies
+            });
+        }
+        if (!newDep) {
+            throw new Error('An error occured while adding dependencies');
+        }
     }
 
     // Render Account Page
