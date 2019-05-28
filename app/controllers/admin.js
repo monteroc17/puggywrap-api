@@ -19,6 +19,11 @@ exports.getFunctions = async(req, res, next) => {
         functions: functions
     });
 };
+/**
+ * EXPORT FUNCTION
+ */
+
+ 
 
 /**
  * ADD FUNCTION
