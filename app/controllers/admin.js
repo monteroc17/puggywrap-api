@@ -1,5 +1,6 @@
 const ApiFunction = require('../models/function');
 const Tag = require('../models/tag');
+const Dependency = require('../models/dependency');
 
 
 /**
@@ -23,12 +24,19 @@ exports.getFunctions = async(req, res, next) => {
  * ADD FUNCTION
  */
 
-exports.getAddFunction = (req, res, next) => {
+exports.getAddFunction = async(req, res, next) => {
+    // Get Dependencies from DB
+    const dependencies = await ApiFunction.findAll();
+    if (!dependencies) {
+        throw new Error('Error getting dependencies!');
+    }
+
     res.render('functions/add-function', {
         pageTitle: 'Puggy Wrap API - Add Function',
         path: '/add_function',
         isAuthenticated: true,
-        errorMessage: ''
+        errorMessage: '',
+        dependencies: dependencies
     });
 }
 
@@ -49,12 +57,21 @@ exports.postAddFunction = async(req, res, next) => {
     tags.forEach(async tag => {
         newTag = await Tag.create({ name: tag });
         if (!newTag) {
-            throw new Error('An error occured while creating tags')
+            throw new Error('An error occured while creating tags');
         }
     });
     //Look for dependencies
     if (dependencies) { // are there dependencies?
         // Add dependencies to intermediate table
+        dependencies.forEach(async dependency => {
+            newDep = await Dependency.create({
+                parent_id: 1,
+                dependency_id: dependency
+            });
+            if (!newDep) {
+                throw new Error('An error occured while adding dependencies');
+            }
+        });
     }
 
     // Render Account Page
