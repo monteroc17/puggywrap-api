@@ -11,6 +11,7 @@ router.get('/functions', adminController.getFunctions);
 router.get('/add_function', adminController.getAddFunction);
 router.post('/add_function', adminController.postAddFunction);
 
+router.get('/single_function', adminController.getSingleFunction);
 
 
 module.exports = router;

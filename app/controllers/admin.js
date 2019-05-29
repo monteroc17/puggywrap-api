@@ -19,11 +19,6 @@ exports.getFunctions = async(req, res, next) => {
         functions: functions
     });
 };
-/**
- * EXPORT FUNCTION
- */
-
- 
 
 /**
  * ADD FUNCTION
@@ -82,4 +77,31 @@ exports.postAddFunction = async(req, res, next) => {
     // Render Account Page
     res.redirect('/admin/functions');
 
+};
+
+/**
+ * UPDATE FUNCTION
+ */
+
+exports.getSingleFunction = async(req, res, _) => {
+    const function_code = req.body.function_code;
+    const functions = await ApiFunction.find({
+        function_code : function_code
+    });
+    if (!functions) {
+        throw new Error('Error getting the function!');
+    }
+
+    res.render('functions/update-function', {
+        pageTitle: 'Puggy Wrap API - Edit Function',
+        path: '/edit_function',
+        isAuthenticated: true,
+        functions: functions
+    });
+};
+
+exports.putSingleFunction = async(req, res, _) => {
+    const { name, description, function_code, dependencies } = req.body;
+
+    res.redirect(`/admin/function/${function_code}`);
 };
