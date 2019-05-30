@@ -43,23 +43,24 @@ exports.getAddFunction = async(req, res, next) => {
 exports.postAddFunction = async(req, res, next) => {
     const { name, description, function_code, dependencies } = req.body;
     let tags = req.body.tags;
-    tags = tags.replace(/\s/g, '').split(',');
-    //Add User function to db
+    tags = tags.replace(/\s/g, '') //.split(',');
+        //Add User function to db
     const newFunction = await ApiFunction.create({
-        name: name,
-        description: description,
-        function_code: function_code
+        name,
+        description,
+        function_code,
+        tags
     });
     if (!newFunction) {
         throw new Error('An error occured while creating function!');
     }
     // Add tags to db table
-    tags.forEach(async tag => {
-        newTag = await Tag.create({ name: tag });
-        if (!newTag) {
-            throw new Error('An error occured while creating tags');
-        }
-    });
+    // tags.forEach(async tag => {
+    //     newTag = await Tag.create({ name: tag });
+    //     if (!newTag) {
+    //         throw new Error('An error occured while creating tags');
+    //     }
+    // });
     //Look for dependencies
     if (dependencies) { // are there dependencies?
         if (typeof dependencies === 'array') {

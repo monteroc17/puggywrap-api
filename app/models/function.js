@@ -21,6 +21,10 @@ const ApiFunction = sequelize.define('function', {
     function_code: {
         type: Sequelize.TEXT,
         allowNull: false
+    },
+    tags: {
+        type: Sequelize.STRING,
+        allowNull: true
     }
 });
 
