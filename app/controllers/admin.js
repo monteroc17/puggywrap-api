@@ -7,17 +7,38 @@ const Dependency = require('../models/dependency');
  * FUNCTIONS
  */
 exports.getFunctions = async(req, res, next) => {
-    const functions = await ApiFunction.findAll();
+    let functions = await ApiFunction.findAll();
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
+    if (req.query.searchText) {
+        const search = req.query.searchText;
+        functions = functions.filter(f => {
+            return f.id == search ||
+                f.name.includes(search) ||
+                f.description.includes(search) ||
+                f.function_code.includes(search) ||
+                f.tags.includes(search);
+        });
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - Functions',
+            path: '/functions',
+            isAuthenticated: true,
+            functions: functions,
+            noFunc_msg: 'No results match your search'
+        });
+        // const url = require('url'); // built-in utility
+        // res.redirect(url.parse(req.url).pathname);
+    } else {
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - Functions',
+            path: '/functions',
+            isAuthenticated: true,
+            functions: functions,
+            noFunc_msg: 'There seems to be no functions yet...'
+        });
+    }
 
-    res.render('functions/functions', {
-        pageTitle: 'Puggy Wrap API - Functions',
-        path: '/functions',
-        isAuthenticated: true,
-        functions: functions
-    });
 };
 
 /**
