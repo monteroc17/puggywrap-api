@@ -1,37 +1,40 @@
 {
-  "name": "puggywrap-api",
-  "version": "1.0.0",
-  "description": "a dynamic library",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/monteroc17/puggywrap-api.git"
-  },
-  "author": "Daniel Montero, Stward Perez, Bryan Hernandez",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/monteroc17/puggywrap-api/issues"
-  },
-  "homepage": "https://github.com/monteroc17/puggywrap-api#readme",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "crypto": "^1.0.1",
-    "csurf": "^1.10.0",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "express-session": "^1.16.1",
-    "express-validator": "^5.3.1",
-    "googleapis": "^40.0.0",
-    "mysql2": "^1.6.5",
-    "multer": "^1.4.1",
-    "nodemailer": "^6.1.1",
-    "nodemailer-sendgrid-transport": "^0.2.0",
-    "nodemon": "^1.19.0",
-    "sequelize": "^5.8.6"
-  }
+    "name": "puggywrap-api",
+    "version": "1.0.0",
+    "description": "a dynamic library",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon --ignore app/util/dynamic-js/ --exec node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/monteroc17/puggywrap-api.git"
+    },
+    "author": "Daniel Montero, Stward Perez, Bryan Hernandez",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/monteroc17/puggywrap-api/issues"
+    },
+    "homepage": "https://github.com/monteroc17/puggywrap-api#readme",
+    "nodemonConfig": {
+        "ignore": ["app/util/dynamic-js/"]
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "crypto": "^1.0.1",
+        "csurf": "^1.10.0",
+        "ejs": "^2.6.1",
+        "express": "^4.16.4",
+        "express-session": "^1.16.1",
+        "express-validator": "^5.3.1",
+        "googleapis": "^40.0.0",
+        "mysql2": "^1.6.5",
+        "multer": "^1.4.1",
+        "nodemailer": "^6.1.1",
+        "nodemailer-sendgrid-transport": "^0.2.0",
+        "nodemon": "^1.19.0",
+        "sequelize": "^5.8.6"
+    }
 }
