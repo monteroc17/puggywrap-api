@@ -7,5 +7,6 @@ const isAuth = require('../middleware/is-auth');
 const router = express.Router();
 
 router.get('/getting_started', homeController.getGetStarted);
+router.get('/:functionID', homeController.getFunctionCode);
 
 module.exports = router;
