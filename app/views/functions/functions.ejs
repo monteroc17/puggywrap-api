@@ -3,7 +3,26 @@
 
     <body>
         <%- include('../includes/navigation.ejs') %>
+
             <h1>Functions</h1>
-            
+            <div class="searchbar">
+                <input type="search" name="searchbar" id="sb">
+            </div>
+            <% if(functions.length === 0) {%>
+                <p>There seems to be no functions yet...</p>
+            <% } else {%>
+                <div class="grid">
+                    <% functions.forEach(element => { %>
+                        <div class="card" style="padding: 5px">
+                            <h2><%= element.name %></h2>
+                            <p><%= element.description %></p>
+                            <hr>
+                            <h3>Code:</h3>
+                            <p><%= element.function_code %></p>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+
 
             <%- include('../includes/end.ejs') %>

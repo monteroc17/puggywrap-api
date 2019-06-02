@@ -8,6 +8,9 @@ const router = express.Router();
 
 router.get('/functions', adminController.getFunctions);
 
+router.get('/add_function', adminController.getAddFunction);
+router.post('/add_function', adminController.postAddFunction);
+
 
 
 module.exports = router;
