@@ -6,14 +6,21 @@ const ApiFunction = require('./function');
 const Dependency = sequelize.define('dependency', {
     parent_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: ApiFunction,
+            key: 'id'
+        }
     },
     dependency_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: ApiFunction,
+            key: 'id'
+        }
     }
 });
 
-Api
 
-module.exports = Tag;
+module.exports = Dependency;
