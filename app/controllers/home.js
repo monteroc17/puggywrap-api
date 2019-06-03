@@ -61,6 +61,17 @@ exports.getFunctionCode = async(req, res, next) => { //returns the function code
         .catch(err => console.log(err));
 };
 
+exports.getBasicImport = (req, res, next) => {
+    const FILE_PATH = `${global.__basedir}/app/util/dynamic-js/basic_import.js`;
+    fs.readFile(FILE_PATH, { encoding: 'utf-8' }, (err, data) => {
+        console.log('reading...');
+        if (!err) {
+            res.type('.js');
+            res.send(data);
+        }
+    });
+}
+
 
 const getDependencies = async(id) => {
     let promesas = [];
