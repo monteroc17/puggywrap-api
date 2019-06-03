@@ -40,9 +40,7 @@ exports.getFunctionCode = async(req, res, next) => { //returns the function code
     getDependencies(functionID)
         .then(data => {
             data.forEach(element => {
-                stream.write(`function ${element.name.replace(/\s/g,'')}(){`)
                 stream.write(element.function_code);
-                stream.write('}\n');
             });
             stream.write(func.function_code);
             stream.end();
@@ -81,13 +79,17 @@ const getDependencies = async(id) => {
         // codes.push(dependency.function_code)
         //stream.write(dependency.function_code);
     });
+    let codes = [];
+    for await (let request of promesas) {
+        const data = await request;
+        codes.push(data);
+    }
+    // Promise.all(promesas)
+    //     .then(responses => {
+    //         responses.forEach(r => { codes.push(r) });
+    //     })
+    //     .catch(err => console.log(err));
     return new Promise((resolve, reject) => {
-        let codes = [];
-        Promise.all(promesas)
-            .then(responses => {
-                responses.forEach(r => { codes.push(r) });
-                resolve(codes);
-            })
-            .catch(err => console.log(err));
+        resolve(codes);
     });
 }
