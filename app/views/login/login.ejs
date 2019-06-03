@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/google_login_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <title>Google login</title>
+    <script >
+        function onSignIn(googleUser){
+            let profile = googleUser.getBasicProfile();
+            console.log(JSON.stringify(profile));
+        }
+    </script>
+    <meta name="google-signin-client_id" content="529163245775-e6cbcsdt556lg4sgma9oruppv4gephu5.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn">
+    </div>
+</body>
+</html>
