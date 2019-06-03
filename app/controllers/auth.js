@@ -1,7 +1,7 @@
-exports.authFuntion = (req, res, next) => {
+exports.getLogin = (req, res, next) => {
     res.render('login/login', {
         pageTitle: 'Puggy Wrap API - Login',
         path: '/login',
-        isAuthenticated: true
+        isAuthenticated: false
     });
 };

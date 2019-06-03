@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/stylesheets/google_login_style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <title>Google login</title>
     <script >
         function onSignIn(googleUser){
             let profile = googleUser.getBasicProfile();
@@ -18,7 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+    <%- include('../includes/navigation.ejs') %>
     <div class="g-signin2" data-onsuccess="onSignIn">
     </div>
-</body>
-</html>
+    <%- include('../includes/end.ejs') %>
