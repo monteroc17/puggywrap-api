@@ -20,8 +20,6 @@ exports.postSignup = async(req, res, next) => {
     const { id, name, email } = req.body;
     const user = await User.findByPk(id);
     if (!user) {
-        console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAA');
-
         const newUser = await User.create({ id, name, email, password: id });
         if (!newUser) {
             throw new Error('Error al crear usuario!');
@@ -46,6 +44,7 @@ exports.postSignin = async(req, res, next) => {
 
 exports.postLogout = async(req, res, next) => {
     req.session.isLoggedIn = false;
+    console.log('in post logout', req.session.isLoggedIn);
     res.clearCookie("G_AUTHUSER_H");
     res.clearCookie("G_ENABLED_IDPS");
     res.redirect('/getting_started');
