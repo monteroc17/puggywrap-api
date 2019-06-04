@@ -7,17 +7,38 @@ const Dependency = require('../models/dependency');
  * FUNCTIONS
  */
 exports.getFunctions = async(req, res, next) => {
-    const functions = await ApiFunction.findAll();
+    let functions = await ApiFunction.findAll();
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
+    if (req.query.searchText) {
+        const search = req.query.searchText;
+        functions = functions.filter(f => {
+            return f.id == search ||
+                f.name.includes(search) ||
+                f.description.includes(search) ||
+                f.function_code.includes(search) ||
+                f.tags.includes(search);
+        });
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - Functions',
+            path: '/functions',
+            isAuthenticated: true,
+            functions: functions,
+            noFunc_msg: 'No results match your search'
+        });
+        // const url = require('url'); // built-in utility
+        // res.redirect(url.parse(req.url).pathname);
+    } else {
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - Functions',
+            path: '/functions',
+            isAuthenticated: true,
+            functions: functions,
+            noFunc_msg: 'There seems to be no functions yet...'
+        });
+    }
 
-    res.render('functions/functions', {
-        pageTitle: 'Puggy Wrap API - Functions',
-        path: '/functions',
-        isAuthenticated: true,
-        functions: functions
-    });
 };
 
 /**
@@ -43,35 +64,43 @@ exports.getAddFunction = async(req, res, next) => {
 exports.postAddFunction = async(req, res, next) => {
     const { name, description, function_code, dependencies } = req.body;
     let tags = req.body.tags;
-    tags = tags.replace(/\s/g, '').split(',');
-    //Add User function to db
+    tags = tags.replace(/\s/g, '') //.split(',');
+        //Add User function to db
     const newFunction = await ApiFunction.create({
-        name: name,
-        description: description,
-        function_code: function_code
+        name,
+        description,
+        function_code,
+        tags
     });
     if (!newFunction) {
         throw new Error('An error occured while creating function!');
     }
     // Add tags to db table
-    tags.forEach(async tag => {
-        newTag = await Tag.create({ name: tag });
-        if (!newTag) {
-            throw new Error('An error occured while creating tags');
-        }
-    });
+    // tags.forEach(async tag => {
+    //     newTag = await Tag.create({ name: tag });
+    //     if (!newTag) {
+    //         throw new Error('An error occured while creating tags');
+    //     }
+    // });
     //Look for dependencies
     if (dependencies) { // are there dependencies?
-        // Add dependencies to intermediate table
-        dependencies.forEach(async dependency => {
-            newDep = await Dependency.create({
-                parent_id: 1,
-                dependency_id: dependency
+        if (typeof dependencies === 'array') {
+            // Add dependencies to intermediate table
+            dependencies.forEach(async dependency => {
+                newDep = await Dependency.create({
+                    parent_id: newFunction.id, // get current function id
+                    dependency_id: dependency
+                });
             });
-            if (!newDep) {
-                throw new Error('An error occured while adding dependencies');
-            }
-        });
+        } else {
+            newDep = await Dependency.create({
+                parent_id: newFunction.id, // get current function id
+                dependency_id: dependencies
+            });
+        }
+        if (!newDep) {
+            throw new Error('An error occured while adding dependencies');
+        }
     }
 
     // Render Account Page
