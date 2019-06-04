@@ -23,19 +23,19 @@ const adminRoutes = require('./app/routes/admin');
 const authRoutes = require('./app/routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(homeRoutes);
-app.use('/admin', adminRoutes);
-
-app.use(authRoutes);
-
-app, use((req, res, next) => {
+app.use((req, res, next) => {
     User.findByPk('116481658024149298998')
         .then(user => {
             req.user = user;
             next();
         })
         .catch(err => console.log(err));
-})
+});
+app.use(homeRoutes);
+app.use('/admin', adminRoutes);
+
+app.use(authRoutes);
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
