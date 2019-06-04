@@ -16,11 +16,14 @@ app.set('views', 'app/views');
 
 /**ROUTES */
 const homeRoutes = require('./app/routes/home');
-const adminRoutes = require('./app/routes/admin')
+const adminRoutes = require('./app/routes/admin');
+const authRoutes = require('./app/routes/login');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(homeRoutes);
 app.use('/admin', adminRoutes);
+
+app.use(authRoutes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));

@@ -1,5 +1,4 @@
 const fs = require('fs');
-const beautify = require('js-beautify');
 const ApiFunction = require('../models/function');
 const Dependencies = require('../models/dependency');
 
