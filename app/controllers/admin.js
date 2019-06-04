@@ -1,5 +1,5 @@
 const ApiFunction = require('../models/function');
-const Tag = require('../models/tag');
+const User = require('../models/user');
 const Dependency = require('../models/dependency');
 
 
@@ -70,7 +70,8 @@ exports.postAddFunction = async(req, res, next) => {
         name,
         description,
         function_code,
-        tags
+        tags,
+        userId: req.user.id
     });
     if (!newFunction) {
         throw new Error('An error occured while creating function!');
