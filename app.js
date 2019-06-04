@@ -14,6 +14,9 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'app/views');
 
+/**Models */
+const User = require('./app/models/user');
+
 /**ROUTES */
 const homeRoutes = require('./app/routes/home');
 const adminRoutes = require('./app/routes/admin');
@@ -24,6 +27,15 @@ app.use(homeRoutes);
 app.use('/admin', adminRoutes);
 
 app.use(authRoutes);
+
+app, use((req, res, next) => {
+    User.findByPk('116481658024149298998')
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err));
+})
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
