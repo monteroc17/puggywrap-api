@@ -17,7 +17,7 @@ app.set('views', 'app/views');
 /**ROUTES */
 const homeRoutes = require('./app/routes/home');
 const adminRoutes = require('./app/routes/admin');
-const authRoutes = require('./app/routes/login');
+const authRoutes = require('./app/routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(homeRoutes);

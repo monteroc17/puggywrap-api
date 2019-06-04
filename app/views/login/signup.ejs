@@ -4,15 +4,14 @@
     <script>
         function onSignIn(googleUser) {
             let profile = googleUser.getBasicProfile();
-            console.log(profile);
             const form = document.createElement('form');
             const params = {
                 id: profile.Eea,
                 name: profile.ig,
-                username: profile.ig.replace(/\s/g,'').toLowerCase()
+                email: profile.U3
             };
             form.method = 'POST';
-            form.action = '/login';
+            form.action = '/signup';
 
             for (const key in params) {
                 if (params.hasOwnProperty(key)) {
