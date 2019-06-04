@@ -1,0 +1,49 @@
+<%- include('../includes/head.ejs') %>
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <h1>Add Function</h1>
+            <% if (errorMessage) { %>
+                <div class="user-message user-message--error">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+                    <div class="grid">
+                        <form action="/admin/add_function" method="post">
+                            <div class="form-control">
+                                <label for="name">Name</label><br>
+                                <input type="text" name="name" id="name">
+                            </div>
+                            <br>
+                            <div class="form-control">
+                                <label for="description">Description</label><br>
+                                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                            </div>
+                            <br>
+                            <div class="form-control">
+                                <label for="description">Code</label><br>
+                                <textarea name="function_code" id="function_code" cols="30" rows="10"></textarea>
+                            </div>
+                            <br>
+                            <div class="form-control">
+                                <label for="name">Tags (each one separated by a comma)</label><br>
+                                <input type="text" name="tags" id="tags">
+                            </div>
+                            <br>
+                            <div class="form-control">
+                                <label for="dependencies">Dependencies</label><br>
+                                <select name="dependencies" id="dependencies" multiple>
+                                    <% for (let dependency of dependencies) { %>
+                                    <option value="<%= dependency.id %>"><%= dependency.name %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                            <br>
+                            <button class="btn" type="submit">Add Function</button>
+                        </form>
+                    </div>
+
+
+                    <%- include('../includes/end.ejs') %>
