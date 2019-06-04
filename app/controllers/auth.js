@@ -1,0 +1,44 @@
+const User = require('../models/user');
+
+exports.getSignup = (req, res, next) => {
+    res.render('login/signup', {
+        pageTitle: 'Puggy Wrap API - Sign Up',
+        path: '/signup',
+        isAuthenticated: false
+    });
+};
+
+exports.getSignin = (req, res, next) => {
+    res.render('login/signin', {
+        pageTitle: 'Puggy Wrap API - Sign In',
+        path: '/signin',
+        isAuthenticated: false
+    });
+};
+
+exports.postSignup = async(req, res, next) => {
+    const { id, name, email } = req.body;
+    const user = await User.findByPk(id);
+    if (!user) {
+        console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAA');
+
+        const newUser = await User.create({ id, name, email, password: id });
+        if (!newUser) {
+            throw new Error('Error al crear usuario!');
+        }
+        res.redirect('/admin/functions');
+    } else {
+        res.redirect('/signin');
+        console.log('El usuario ya existe!');
+    }
+};
+
+exports.postSignin = async(req, res, next) => {
+    const id = req.body.id;
+    const user = await User.findByPk(id);
+    if (!user) {
+        console.log('El usuario no existe!');
+        res.redirect('/signup');
+    }
+    res.redirect('/admin/functions');
+};
