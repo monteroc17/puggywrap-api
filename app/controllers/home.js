@@ -3,6 +3,7 @@ const ApiFunction = require('../models/function');
 const Dependencies = require('../models/dependency');
 
 exports.getGetStarted = (req, res, next) => {
+    console.log(req.session.isLoggedIn);
     res.render('getting_started/getting_started', {
         pageTitle: 'Puggy Wrap API - Getting Started',
         path: '/getting_started',
