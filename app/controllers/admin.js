@@ -83,15 +83,15 @@ exports.postAddFunction = async(req, res, next) => {
  * UPDATE FUNCTION
  */
 
-exports.getSingleFunction = async(req, res, _) => {
+exports.getEditFunction = async(req, res, _) => {
     const function_code = req.body.function_code;
-    const functions = await ApiFunction.find({
-        function_code : function_code
+    const functions = await ApiFunction.findOne({
+        where: {function_code : function_code}
     });
     if (!functions) {
         throw new Error('Error getting the function!');
     }
-
+    //render Edit Page
     res.render('functions/update-function', {
         pageTitle: 'Puggy Wrap API - Edit Function',
         path: '/edit_function',
@@ -100,8 +100,17 @@ exports.getSingleFunction = async(req, res, _) => {
     });
 };
 
-exports.putSingleFunction = async(req, res, _) => {
-    const { name, description, function_code, dependencies } = req.body;
+exports.putEditFunction = async(req, res, _) => {
+    const { name, description, function_code } = req.body;
+    const newFunction = await ApiFunction.update({
+        name: name,
+        description: description,
+        function_code: function_code
+    });
 
+    if (!newFunction) {
+        throw new Error('An error occured while creating function!');
+    }
+    
     res.redirect(`/admin/function/${function_code}`);
 };
