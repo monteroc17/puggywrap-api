@@ -6,7 +6,10 @@ const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-router.get('/login', authController.getLogin);
-router.post('/login', authController.postLogin);
+router.get('/signin', authController.getSignin);
+router.post('/signin', authController.postSignin);
+router.get('/signup', authController.getSignup);
+router.post('/signup', authController.postSignup);
+router.post('/logout', authController.postLogout);
 
 module.exports = router;

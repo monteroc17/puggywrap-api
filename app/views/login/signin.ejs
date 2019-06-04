@@ -4,15 +4,12 @@
     <script>
         function onSignIn(googleUser) {
             let profile = googleUser.getBasicProfile();
-            console.log(profile);
             const form = document.createElement('form');
             const params = {
-                id: profile.Eea,
-                name: profile.ig,
-                username: profile.ig.replace(/\s/g,'').toLowerCase()
+                id: profile.Eea
             };
             form.method = 'POST';
-            form.action = '/login';
+            form.action = '/signin';
 
             for (const key in params) {
                 if (params.hasOwnProperty(key)) {
@@ -36,6 +33,7 @@
 
     <body>
         <%- include('../includes/navigation.ejs') %>
+            <h1>Sign In</h1>
             <div class="g-signin2" data-onsuccess="onSignIn">
             </div>
             <%- include('../includes/end.ejs') %>

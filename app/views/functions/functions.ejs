@@ -6,23 +6,34 @@
 
             <h1>Functions</h1>
             <div class="searchbar">
-                <input type="search" name="searchbar" id="sb">
+                <form action="/admin/functions" method="get">
+                    <input class="form-control" type="text" name="searchText" id="searchText">
+                    <button type="submit"></button>
+                </form>
             </div>
             <% if(functions.length === 0) {%>
-                <p>There seems to be no functions yet...</p>
-            <% } else {%>
-                <div class="grid">
-                    <% functions.forEach(element => { %>
-                        <div class="card" style="padding: 5px">
-                            <h2><%= element.name %></h2>
-                            <p><%= element.description %></p>
-                            <hr>
-                            <h3>Code:</h3>
-                            <p><%= element.function_code %></p>
-                        </div>
-                    <% }); %>
-                </div>
-            <% } %>
+                <p>
+                    <%= noFunc_msg %>
+                </p>
+                <% } else {%>
+                    <div class="grid">
+                        <% functions.forEach(element => { %>
+                            <div class="card" style="padding: 5px">
+                                <h2>
+                                    <%= element.name %>
+                                </h2>
+                                <p>
+                                    <%= element.description %>
+                                </p>
+                                <hr>
+                                <h3>Code:</h3>
+                                <p>
+                                    <%= element.function_code %>
+                                </p>
+                            </div>
+                            <% }); %>
+                    </div>
+                    <% } %>
 
 
-            <%- include('../includes/end.ejs') %>
+                        <%- include('../includes/end.ejs') %>
