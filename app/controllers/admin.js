@@ -23,7 +23,7 @@ exports.getFunctions = async(req, res, next) => {
         res.render('functions/functions', {
             pageTitle: 'Puggy Wrap API - Functions',
             path: '/functions',
-            isAuthenticated: true,
+            isAuthenticated: req.session.isLoggedIn,
             functions: functions,
             noFunc_msg: 'No results match your search'
         });
@@ -33,7 +33,7 @@ exports.getFunctions = async(req, res, next) => {
         res.render('functions/functions', {
             pageTitle: 'Puggy Wrap API - Functions',
             path: '/functions',
-            isAuthenticated: true,
+            isAuthenticated: req.session.isLoggedIn,
             functions: functions,
             noFunc_msg: 'There seems to be no functions yet...'
         });
@@ -55,7 +55,7 @@ exports.getAddFunction = async(req, res, next) => {
     res.render('functions/add-function', {
         pageTitle: 'Puggy Wrap API - Add Function',
         path: '/add_function',
-        isAuthenticated: true,
+        isAuthenticated: req.session.isLoggedIn,
         errorMessage: '',
         dependencies: dependencies
     });
