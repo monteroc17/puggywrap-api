@@ -45,7 +45,7 @@ exports.getFunctions = async(req, res, next) => {
  * ADD FUNCTION
  */
 
-exports.getAddFunction = async(req, res, next) => {
+exports.getAddFunction = async (req, res, next) => {
     // Get Dependencies from DB
     const dependencies = await ApiFunction.findAll();
     if (!dependencies) {
@@ -61,7 +61,7 @@ exports.getAddFunction = async(req, res, next) => {
     });
 }
 
-exports.postAddFunction = async(req, res, next) => {
+exports.postAddFunction = async (req, res, next) => {
     const { name, description, function_code, dependencies } = req.body;
     let tags = req.body.tags;
     tags = tags.replace(/\s/g, '') //.split(',');
@@ -107,4 +107,55 @@ exports.postAddFunction = async(req, res, next) => {
     // Render Account Page
     res.redirect('/admin/functions');
 
+};
+
+/**
+ * UPDATE FUNCTION
+ */
+
+exports.getSingleFunction = async (req, res, _) => {
+    const function_code = req.body.function_code;
+    const functions = await ApiFunction.find({
+        function_code: function_code
+    });
+    if (!functions) {
+        throw new Error('Error getting the function!');
+    }
+
+    res.render('functions/update-function', {
+        pageTitle: 'Puggy Wrap API - Edit Function',
+        path: '/edit_function',
+        isAuthenticated: true,
+        functions: functions
+    });
+};
+
+exports.putSingleFunction = async (req, res, _) => {
+    const { name, description, function_code, dependencies } = req.body;
+
+    res.redirect(`/admin/function/${function_code}`);
+};
+
+/**
+ * DETAILS FUNCTION
+ */
+
+exports.getFunctionDetails = (req, res, next) => {
+
+    // This const variable was created just for testing a function's details view
+    const funcion =
+    {
+        id: 1,
+        name: 'A function name',
+        description: 'A description',
+        function_code: 'let a = 0;',
+        userID: req.params.functionID
+    };
+
+    res.render('functions/details-function', {
+        pageTitle: 'Puggy Wrap API - Function Details',
+        path: '/details',
+        isAuthenticated: true,
+        funcion: funcion
+    });
 };
