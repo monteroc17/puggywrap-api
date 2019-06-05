@@ -6,8 +6,8 @@ const Dependency = require('../models/dependency');
 /**
  * FUNCTIONS
  */
-exports.getFunctions = async(req, res, next) => {
-    let functions = await ApiFunction.findAll();
+exports.getFunctions = async (req, res, next) => {
+    const functions = await ApiFunction.findAll();
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
@@ -45,7 +45,7 @@ exports.getFunctions = async(req, res, next) => {
  * ADD FUNCTION
  */
 
-exports.getAddFunction = async(req, res, next) => {
+exports.getAddFunction = async (req, res, next) => {
     // Get Dependencies from DB
     const dependencies = await ApiFunction.findAll();
     if (!dependencies) {
@@ -61,7 +61,7 @@ exports.getAddFunction = async(req, res, next) => {
     });
 }
 
-exports.postAddFunction = async(req, res, next) => {
+exports.postAddFunction = async (req, res, next) => {
     const { name, description, function_code, dependencies } = req.body;
     let tags = req.body.tags;
     tags = tags.replace(/\s/g, '') //.split(',');
@@ -142,4 +142,28 @@ exports.putEditFunction = async(req, res, _) => {
     }
     
     res.redirect(`/admin/function/${function_code}`);
+};
+
+/**
+ * DETAILS FUNCTION
+ */
+
+exports.getFunctionDetails = (req, res, next) => {
+
+    // This const variable was created just for testing a function's details view
+    const funcion =
+    {
+        id: 1,
+        name: 'A function name',
+        description: 'A description',
+        function_code: 'let a = 0;',
+        userID: req.params.functionID
+    };
+
+    res.render('functions/details-function', {
+        pageTitle: 'Puggy Wrap API - Function Details',
+        path: '/details',
+        isAuthenticated: true,
+        funcion: funcion
+    });
 };
