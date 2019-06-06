@@ -13,12 +13,12 @@ exports.getFunctions = async(req, res, next) => {
         order: [
           ['version', 'desc']
         ],
-        limit: 1
+        limit: 1,
+        attributes: ['version', 'function_code']
       }]});
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
-    console.log(functions['versions']);
     if (req.query.searchText) {
         const search = req.query.searchText;
         functions = functions.filter(f => {
