@@ -24,7 +24,7 @@ const ApiFunction = sequelize.define('function', {
     }
 });
 
-ApiFunction.belongsTo(User);
+ApiFunction.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(ApiFunction);
 
 module.exports = ApiFunction;

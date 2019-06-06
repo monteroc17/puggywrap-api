@@ -1,13 +1,13 @@
 const ApiFunction = require('../models/function');
-const Tag = require('../models/tag');
+const User = require('../models/user');
 const Dependency = require('../models/dependency');
 
 
 /**
  * FUNCTIONS
  */
-exports.getFunctions = async (req, res, next) => {
-    const functions = await ApiFunction.findAll();
+exports.getFunctions = async(req, res, next) => {
+    let functions = await ApiFunction.findAll();
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
@@ -23,7 +23,7 @@ exports.getFunctions = async (req, res, next) => {
         res.render('functions/functions', {
             pageTitle: 'Puggy Wrap API - Functions',
             path: '/functions',
-            isAuthenticated: true,
+            isAuthenticated: req.session.isLoggedIn,
             functions: functions,
             noFunc_msg: 'No results match your search'
         });
@@ -33,7 +33,7 @@ exports.getFunctions = async (req, res, next) => {
         res.render('functions/functions', {
             pageTitle: 'Puggy Wrap API - Functions',
             path: '/functions',
-            isAuthenticated: true,
+            isAuthenticated: req.session.isLoggedIn,
             functions: functions,
             noFunc_msg: 'There seems to be no functions yet...'
         });
@@ -55,7 +55,7 @@ exports.getAddFunction = async (req, res, next) => {
     res.render('functions/add-function', {
         pageTitle: 'Puggy Wrap API - Add Function',
         path: '/add_function',
-        isAuthenticated: true,
+        isAuthenticated: req.session.isLoggedIn,
         errorMessage: '',
         dependencies: dependencies
     });
@@ -70,7 +70,8 @@ exports.postAddFunction = async (req, res, next) => {
         name,
         description,
         function_code,
-        tags
+        tags,
+        userId: req.user.id
     });
     if (!newFunction) {
         throw new Error('An error occured while creating function!');
