@@ -10,7 +10,7 @@ const sequelize = require('./app/util/database');
 
 const app = express();
 
-
+const v = require('./app/models/version');
 app.set('view engine', 'ejs');
 app.set('views', 'app/views');
 

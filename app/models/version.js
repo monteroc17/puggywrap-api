@@ -1,9 +1,9 @@
-const Sequalize = require('sequelize');
+const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
 const function_code = require('./function');
 
-const = ApiVersion = sequelize.define('version', {
+const ApiVersion = sequelize.define('version', {
     id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -15,7 +15,7 @@ const = ApiVersion = sequelize.define('version', {
         allowNull: false
     },
     version: {
-        type: Sequalize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false
     }
 });
