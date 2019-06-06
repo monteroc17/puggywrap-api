@@ -1,4 +1,5 @@
 const ApiFunction = require('../models/function');
+const Version = require('../models/version');
 const User = require('../models/user');
 const Dependency = require('../models/dependency');
 
@@ -114,9 +115,16 @@ exports.postAddFunction = async (req, res, next) => {
  */
 
 exports.getEditFunction = async(req, res, _) => {
-    const function_code = req.body.function_code;
-    const functions = await ApiFunction.findOne({
-        where: {function_code : function_code}
+    const id = req.body.id;
+    const editableFunction = await ApiFunction.findOne({
+        where: {id : id},
+        include:[{
+            model: version,
+            order:[
+                ['version', 'DESC']
+            ],
+            limit: 1
+        }]
     });
     if (!functions) {
         throw new Error('Error getting the function!');
@@ -126,7 +134,7 @@ exports.getEditFunction = async(req, res, _) => {
         pageTitle: 'Puggy Wrap API - Edit Function',
         path: '/edit_function',
         isAuthenticated: true,
-        functions: functions
+        editableFunction: editableFunction
     });
 };
 
