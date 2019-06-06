@@ -1,4 +1,5 @@
 const ApiFunction = require('../models/function');
+const Version = require('../models/version');
 const User = require('../models/user');
 const Dependency = require('../models/dependency');
 
@@ -7,7 +8,14 @@ const Dependency = require('../models/dependency');
  * FUNCTIONS
  */
 exports.getFunctions = async(req, res, next) => {
-    let functions = await ApiFunction.findAll();
+    let functions = await ApiFunction.findAll({include: [{
+        model: Version,
+        order: [
+          ['version', 'desc']
+        ],
+        limit: 1,
+        attributes: ['version', 'function_code']
+      }]});
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
@@ -17,7 +25,6 @@ exports.getFunctions = async(req, res, next) => {
             return f.id == search ||
                 f.name.includes(search) ||
                 f.description.includes(search) ||
-                f.function_code.includes(search) ||
                 f.tags.includes(search);
         });
         res.render('functions/functions', {
@@ -47,7 +54,13 @@ exports.getFunctions = async(req, res, next) => {
 
 exports.getAddFunction = async (req, res, next) => {
     // Get Dependencies from DB
-    const dependencies = await ApiFunction.findAll();
+    const dependencies = await ApiFunction.findAll({include: [{
+        model: Version,
+        order: [
+          ['version', 'desc']
+        ],
+        limit: 1
+      }]});
     if (!dependencies) {
         throw new Error('Error getting dependencies!');
     }
@@ -69,20 +82,20 @@ exports.postAddFunction = async (req, res, next) => {
     const newFunction = await ApiFunction.create({
         name,
         description,
-        function_code,
         tags,
         userId: req.user.id
     });
     if (!newFunction) {
         throw new Error('An error occured while creating function!');
     }
-    // Add tags to db table
-    // tags.forEach(async tag => {
-    //     newTag = await Tag.create({ name: tag });
-    //     if (!newTag) {
-    //         throw new Error('An error occured while creating tags');
-    //     }
-    // });
+    const version = await Version.create({
+        function_code,
+        version: 1,
+        functionId: newFunction.id
+    });
+    if(!version) {
+        throw new Error('An error occured while creating function!');
+    }
     //Look for dependencies
     if (dependencies) { // are there dependencies?
         if (typeof dependencies === 'array') {
