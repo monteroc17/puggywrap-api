@@ -234,7 +234,7 @@ exports.putEditFunction = async (req, res, _) => {
  */
 
 exports.getFunctionDetails = async (req, res, next) => {
-    const backURL=req.header('Referer') || '/';
+    const backURL=req.header('Referer') || '/admin/functions';
     const id = req.params.functionID;
     const functionDetails = await ApiFunction.findOne({
         where: {

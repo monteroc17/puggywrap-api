@@ -10,6 +10,11 @@
             <h1>Functions</h1>
         <% } %>
             <div class="searchbar">
+                <% if(isCreator) { %>
+                    <form action="/admin/my_functions" method="get">
+                <% } else { %>
+                    <form action="/admin/functions" method="get">
+                <% } %>
                 <form action="/admin/functions" method="get">
                     <input class="form-control" type="text" name="searchText" id="searchText">
                     <button type="submit"></button>
