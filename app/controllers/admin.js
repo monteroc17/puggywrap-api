@@ -7,15 +7,17 @@ const Dependency = require('../models/dependency');
 /**
  * FUNCTIONS
  */
-exports.getFunctions = async(req, res, next) => {
-    let functions = await ApiFunction.findAll({include: [{
-        model: Version,
-        order: [
-          ['version', 'desc']
-        ],
-        limit: 1,
-        attributes: ['version', 'function_code']
-      }]});
+exports.getFunctions = async (req, res, next) => {
+    let functions = await ApiFunction.findAll({
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1,
+            attributes: ['version', 'function_code']
+        }]
+    });
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
@@ -32,6 +34,7 @@ exports.getFunctions = async(req, res, next) => {
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
+            isCreator: false,
             noFunc_msg: 'No results match your search'
         });
         // const url = require('url'); // built-in utility
@@ -42,6 +45,54 @@ exports.getFunctions = async(req, res, next) => {
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
+            isCreator: false,
+            noFunc_msg: 'There seems to be no functions yet...'
+        });
+    }
+
+};
+exports.getMyFunctions = async (req, res, next) => {
+    let functions = await ApiFunction.findAll({
+        where: {
+            userId: req.user.id
+        },
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1,
+            attributes: ['version', 'function_code']
+        }]
+    });
+    if (!functions) {
+        throw new Error('Error getting all functions!');
+    }
+    if (req.query.searchText) {
+        const search = req.query.searchText;
+        functions = functions.filter(f => {
+            return f.id == search ||
+                f.name.includes(search) ||
+                f.description.includes(search) ||
+                f.tags.includes(search);
+        });
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - My Functions',
+            path: '/my_functions',
+            isAuthenticated: req.session.isLoggedIn,
+            functions: functions,
+            isCreator: true,
+            noFunc_msg: 'No results match your search'
+        });
+        // const url = require('url'); // built-in utility
+        // res.redirect(url.parse(req.url).pathname);
+    } else {
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - My Functions',
+            path: '/functions',
+            isAuthenticated: req.session.isLoggedIn,
+            functions: functions,
+            isCreator: true,
             noFunc_msg: 'There seems to be no functions yet...'
         });
     }
@@ -54,13 +105,15 @@ exports.getFunctions = async(req, res, next) => {
 
 exports.getAddFunction = async (req, res, next) => {
     // Get Dependencies from DB
-    const dependencies = await ApiFunction.findAll({include: [{
-        model: Version,
-        order: [
-          ['version', 'desc']
-        ],
-        limit: 1
-      }]});
+    const dependencies = await ApiFunction.findAll({
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1
+        }]
+    });
     if (!dependencies) {
         throw new Error('Error getting dependencies!');
     }
@@ -75,10 +128,15 @@ exports.getAddFunction = async (req, res, next) => {
 }
 
 exports.postAddFunction = async (req, res, next) => {
-    const { name, description, function_code, dependencies } = req.body;
+    const {
+        name,
+        description,
+        function_code,
+        dependencies
+    } = req.body;
     let tags = req.body.tags;
     tags = tags.replace(/\s/g, '') //.split(',');
-        //Add User function to db
+    //Add User function to db
     const newFunction = await ApiFunction.create({
         name,
         description,
@@ -93,7 +151,7 @@ exports.postAddFunction = async (req, res, next) => {
         version: 1,
         functionId: newFunction.id
     });
-    if(!version) {
+    if (!version) {
         throw new Error('An error occured while creating function!');
     }
     //Look for dependencies
@@ -126,13 +184,15 @@ exports.postAddFunction = async (req, res, next) => {
  * UPDATE FUNCTION
  */
 
-exports.getEditFunction = async(req, res, _) => {
+exports.getEditFunction = async (req, res, _) => {
     const id = req.params.functionID;
     const editableFunction = await ApiFunction.findOne({
-        where: {id : id},
-        include:[{
+        where: {
+            id: id
+        },
+        include: [{
             model: Version,
-            order:[
+            order: [
                 ['version', 'DESC']
             ],
             limit: 1
@@ -150,8 +210,12 @@ exports.getEditFunction = async(req, res, _) => {
     });
 };
 
-exports.putEditFunction = async(req, res, _) => {
-    const { name, description, function_code } = req.body;
+exports.putEditFunction = async (req, res, _) => {
+    const {
+        name,
+        description,
+        function_code
+    } = req.body;
     const newFunction = await ApiFunction.update({
         name: name,
         description: description,
@@ -161,7 +225,7 @@ exports.putEditFunction = async(req, res, _) => {
     if (!newFunction) {
         throw new Error('An error occured while creating function!');
     }
-    
+
     res.redirect(`/admin/function/${function_code}`);
 };
 
@@ -170,12 +234,15 @@ exports.putEditFunction = async(req, res, _) => {
  */
 
 exports.getFunctionDetails = async (req, res, next) => {
+    const backURL=req.header('Referer') || '/';
     const id = req.params.functionID;
     const functionDetails = await ApiFunction.findOne({
-        where: {id : id},
-        include:[{
+        where: {
+            id: id
+        },
+        include: [{
             model: Version,
-            order:[
+            order: [
                 ['version', 'DESC']
             ],
             limit: 1
@@ -187,6 +254,7 @@ exports.getFunctionDetails = async (req, res, next) => {
     res.render('functions/details-function', {
         pageTitle: 'Puggy Wrap API - Function Details',
         path: '/details',
+        previous_page: backURL,
         isAuthenticated: true,
         functionDetails: functionDetails,
         version: functionDetails.versions[0]
