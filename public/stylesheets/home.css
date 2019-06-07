@@ -1,0 +1,368 @@
+.hidden{
+    visibility: hidden;
+}
+
+.link{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ========== First part ========== */
+
+div#container1{
+    height: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+div#logo-container{
+    height: 400px;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    -webkit-animation: zoomIn 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: zoomIn 1s; /* Firefox < 16 */
+        animation: zoomIn 1s;
+        animation-delay: 0.1s;
+}
+
+img#logo {
+    height: 100%;
+    width: 100%;
+}
+
+img#logo:hover{
+    -webkit-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Firefox < 16 */
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+
+    -webkit-animation-name: bounce; /* Safari, Chrome and Opera > 12.1 */
+    -webkit-animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+
+    -moz-animation-name: bounce; /* Firefox < 16 */
+    -moz-animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);
+    
+        animation-name: bounce;
+        animation-timing-function: cubic-bezier(0.280, 0.840, 0.420, 1);    
+}
+
+div#cover{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+span#api-name{
+    font-family: 'Sigmar One', cursive;
+    font-size: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #3d3d3d;
+
+    -webkit-animation: fadeIn 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeIn 1s; /* Firefox < 16 */
+        animation: fadeIn 1s;
+        animation-delay: 0.5s;
+}
+
+span#description{
+    font-size: 60px;
+    color: #3d3d3d;
+    margin-left: auto;
+    margin-right: auto;
+
+    -webkit-animation: fadeIn 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeIn 1s; /* Firefox < 16 */
+        animation: fadeIn 1s;
+        animation-delay: 0.8s;
+}
+
+
+/* ========== Second container ========== */
+
+div#possibilities-container1{
+    height: 512px;
+    width: 100%;
+
+    background-color: #f3f3f3;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+div#possibilities-container2{
+    height: 100%;
+    width: 48%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.possible {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.possible-img-container {
+    height: 96px;
+    width: 96px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.possible-img {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 95%;
+    width: 95%;
+}
+
+.possible-description-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 96px;
+    width: 83%;
+}
+
+.possible-title {
+    font-size: 28px;
+    color: #3d3d3d;
+    font-weight: bold;
+}
+
+div#possibilities-img-container{
+    height: 512px;
+    width: 512px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+img#possibilities-img{
+    height: 512px;
+    width: 512px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img#possibilities-img:hover{
+    -webkit-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Firefox < 16 */
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+
+    -webkit-animation-name: rubberBand; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation-name: rubberBand; /* Firefox < 16 */
+        animation-name: rubberBand;
+}
+
+
+/* ========== Third container ========== */
+
+div#opportunities{
+    height: 200px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #f3f3f3;
+}
+
+.opportunity{
+    height: 100%;
+    width: 33.2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+
+.opportunity-title{
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 25px;
+    color: #3d3d3d;
+    font-weight: bold;
+}
+
+div#oppo-container2{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+
+div#create-title-container{
+    display: flex;
+    flex-direction: row;
+}
+
+div#creators-container{
+    height: 20%;
+}
+
+.creator-info-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 100%;
+    width: 50%;
+}
+
+.creator-name-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    
+    width: 100%;
+}
+
+.black-bar{
+    background-color: #3d3d3d;
+    width: 2%;
+}
+
+
+.creator-name {
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 125%;
+    color: #696969;
+}
+
+.creator-link-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    height: 100%;
+    width: 30%;
+}
+
+.git-link{
+    text-decoration: none;
+}
+
+.git-img{
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 100%;
+}
+
+.git-img:hover{
+    -webkit-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Safari, Chrome and Opera > 12.1 */
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+
+    -moz-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Firefox < 16 */
+    -moz-transform-transform: translate3d(0, 0, 0);
+    -moz-transform-backface-visibility: hidden;
+    -moz-transform-perspective: 1000px;
+    
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+}
+
+img#fb-img{
+    height: 120px;
+    width: 120px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+img#fb-img:hover{
+    -webkit-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Safari, Chrome and Opera > 12.1 */
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+
+    -moz-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; /* Firefox < 16 */
+    -moz-transform-transform: translate3d(0, 0, 0);
+    -moz-transform-backface-visibility: hidden;
+    -moz-transform-perspective: 1000px;
+    
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+}
+
+a#link1{
+    text-decoration: none;
+}
+
+span#orWord {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 25px;
+    color: #696969;
+}
+
+a#link2{
+    text-decoration: none;
+}
+
+.cool-btn {
+    padding: 16px;
+    width: 220px;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 25px;
+    color: #3d3d3d;
+    font-weight: bold;
+    text-align: center;
+
+    background-color: #b8e065;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+
+    transition: all 0.5s;
+    cursor: pointer;
+
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+  
+.cool-btn:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;  
+    top: 14px;
+    right: -20px;
+    transition: 0.5s;
+}
+  
+.cool-btn:hover{
+    padding-right: 24px;
+    padding-left: 8px;
+}
+  
+.cool-btn:hover:after {
+    opacity: 1;
+    right: 10px;
+}
