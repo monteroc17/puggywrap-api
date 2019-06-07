@@ -86,7 +86,7 @@ exports.postAddFunction = async (req, res, next) => {
         userId: req.user.id
     });
     if (!newFunction) {
-        throw new Error('An error occured while creating function!');
+        throw new Error('versionerror occured while creating function!');
     }
     const version = await Version.create({
         function_code,
@@ -127,19 +127,26 @@ exports.postAddFunction = async (req, res, next) => {
  */
 
 exports.getEditFunction = async(req, res, _) => {
-    const function_code = req.body.function_code;
-    const functions = await ApiFunction.findOne({
-        where: {function_code : function_code}
+    const id = req.params.functionID;
+    const editableFunction = await ApiFunction.findOne({
+        where: {id : id},
+        include:[{
+            model: Version,
+            order:[
+                ['version', 'DESC']
+            ],
+            limit: 1
+        }]
     });
-    if (!functions) {
+    if (!editableFunction) {
         throw new Error('Error getting the function!');
     }
-    //render Edit Page
     res.render('functions/update-function', {
         pageTitle: 'Puggy Wrap API - Edit Function',
         path: '/edit_function',
         isAuthenticated: true,
-        functions: functions
+        editableFunction: editableFunction,
+        version: editableFunction.versions[0]
     });
 };
 
@@ -162,22 +169,26 @@ exports.putEditFunction = async(req, res, _) => {
  * DETAILS FUNCTION
  */
 
-exports.getFunctionDetails = (req, res, next) => {
-
-    // This const variable was created just for testing a function's details view
-    const funcion =
-    {
-        id: 1,
-        name: 'A function name',
-        description: 'A description',
-        function_code: 'let a = 0;',
-        userID: req.params.functionID
-    };
-
+exports.getFunctionDetails = async (req, res, next) => {
+    const id = req.params.functionID;
+    const functionDetails = await ApiFunction.findOne({
+        where: {id : id},
+        include:[{
+            model: Version,
+            order:[
+                ['version', 'DESC']
+            ],
+            limit: 1
+        }]
+    });
+    if (!functionDetails) {
+        throw new Error('Error getting the function!');
+    }
     res.render('functions/details-function', {
         pageTitle: 'Puggy Wrap API - Function Details',
         path: '/details',
         isAuthenticated: true,
-        funcion: funcion
+        functionDetails: functionDetails,
+        version: functionDetails.versions[0]
     });
 };
