@@ -1,34 +1,45 @@
 <%- include('../includes/head.ejs') %>
 
+    <link rel="stylesheet" href="/stylesheets/animations.css">
     <link rel="stylesheet" href="/stylesheets/getting_started.css">
+    
+    <%/* These functions are meant to create a "show element" chain */%>
+    <script>
+        function delay() {
+            setTimeout(function () {
+                document.getElementById("api-name").style.visibility = "visible";
+            }, 100);
+            setTimeout(function () {
+                var elements = document.getElementsByClassName('step');
+                for(var i = 0; i < elements.length; i++) {
+                    elements[i].style.visibility = 'visible';
+                }                
+            }, 500);
+            setTimeout(function () {
+                document.getElementById("GSLogo").style.visibility = "visible";
+            }, 800);                        
+        }      
+    </script>
+
 </head>
 <body>
     <%- include('../includes/navigation.ejs') %>
     <div id="main-container">
 
-        <div id="container1">
+        <div id="container1" class="card">
             <div id="title">
-                <span id="api-name">
-                    PUGGYWRAP
-                </span>
-
-                <span id="message">
+                <span class="hidden" id="api-name" onload="delay();">
                     Getting started
                 </span>
             </div>
 
             <div id="logo-container">
-                <img src="/images/puggywrap.png" alt="Puggy Wrap Logo" id="logo">
+                <img src="/images/puggywrap.png" alt="Puggy Wrap Logo" class="hidden" id="GSLogo" onload="delay();">
             </div>
         </div>
 
-
-        <div id="container2">
-            <span>Everything you should know</span>
-        </div>
-
-        <div id="container3">
-            <div class="step">
+        <div id="container2" class="card">
+            <div class="step" onload="delay();">
                 <div class="step-img-container">
                     <img src="/images/one.png" alt="Step 1 image" class="step-img">
                 </div>
@@ -44,7 +55,7 @@
 
             <div class="step">
                 <div class="step-img-container">
-                    <img src="/public/images/two.png" alt="Step 2 image" class="step-img">
+                    <img src="/images/two.png" alt="Step 2 image" class="step-img">
                 </div>
                 <div class="step-description-container">
                     <span class="step-title">

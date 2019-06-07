@@ -1,0 +1,189 @@
+<%- include('../includes/head.ejs') %>
+
+    <link rel="stylesheet" href="/stylesheets/animations.css">
+    <link rel="stylesheet" href="/stylesheets/getting_started.css">
+    <link rel="stylesheet" href="/stylesheets/home.css">
+
+    <%/* These functions are meant to create a "show element" chain */%>
+    <script>
+        function delay() {
+            setTimeout(function () {
+                document.getElementById("api-name").style.visibility = "visible";
+            }, 500);
+            setTimeout(function () {
+                document.getElementById("description").style.visibility = "visible";
+            }, 800);
+            setTimeout(function () {
+                document.getElementById("logo").style.visibility = "visible";
+            }, 100);                        
+        }      
+    </script>
+
+</head>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <div id="container1" class="card">
+            <div id="logo-container">
+                <img src="/images/puggywrap.png" alt="Puggy Wrap Logo" class="hidden" id="logo" onload="delay();">
+            </div>
+
+            <div id="cover">
+                <span class="hidden" id="api-name" onload="delay();">
+                    PuggyWrap
+                </span>
+                <span class="hidden" id="description" onload="delay();">
+                    A Dynamic Library API
+                </span>
+            </div>          
+        </div>
+
+        <div id="possibilities-container1" class="card">
+            <div id="possibilities-container2">
+                <div class="possible">
+                    <div class="possible-img-container">
+                        <img src="/images/free.png" alt="Possible 1 image" class="possible-img">
+                    </div>
+                    <div class="possible-description-container">
+                        <span class="possible-title">
+                            It is completely free
+                        </span>
+                    </div>
+                </div>
+                <div class="possible">
+                    <div class="possible-img-container">
+                        <img src="/images/find.png" alt="Possible 2 image" class="possible-img">
+                    </div>
+                    <div class="possible-description-container">
+                        <span class="possible-title">
+                            Find the function you need
+                        </span>
+                    </div>
+                </div>
+                <div class="possible">
+                    <div class="possible-img-container">
+                        <img src="/images/pull.png" alt="Possible 3 image" class="possible-img">
+                    </div>
+                    <div class="possible-description-container">
+                        <span class="possible-title">
+                            Pulling cannot be easier
+                        </span>
+                    </div>
+                </div>
+                <div class="possible">
+                    <div class="possible-img-container">
+                        <img src="/images/collab.png" alt="Possible 4 image" class="possible-img">
+                    </div>
+                    <div class="possible-description-container">
+                        <span class="possible-title">
+                            Feel free to be a collaborator
+                        </span>
+                    </div>
+                </div>                                    
+            </div>
+
+            <div id="possibilities-img-container">
+                <img src="/images/code.png" alt="Code image" id="possibilities-img">
+            </div>
+        </div>
+
+        <div id="opportunities" class="card">
+            <div class="opportunity" id="oppo-container1">
+                <span class="opportunity-title">
+                Follow us
+                </span>
+                <a target="_blank" rel="noopener noreferrer" class="link" href="https://www.facebook.com/puggywrapAPI/">
+                    <img src="/images/fb.png" alt="Facebook URL" id="fb-img">
+                </a>
+            </div>
+            <div class="opportunity" id="oppo-container2">
+                <div id="create-title-container">
+                    <span class="opportunity-title">
+                        Created by
+                    </span>
+                </div>
+                <div id="creators-container">
+                    <div class="creator-info-container">
+                        <div class="creator-name-container">
+                            <span class="creator-name">
+                                Daniel Montero
+                            </span>
+                        </div>
+
+                        <div class="black-bar"></div>
+                        
+                        <div class="creator-link-container">
+                            <a target="_blank" rel="noopener noreferrer" class="git-link" href="https://github.com/monteroc17">
+                                <img src="/images/github.png" alt="GitHub Profile URL" class="git-img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="creators-container">
+                    <div class="creator-info-container">
+                        <div class="creator-name-container">
+                            <span class="creator-name">
+                                Leiver Jiménez
+                            </span>
+                        </div>
+
+                        <div class="black-bar"></div>
+
+                        <div class="creator-link-container">
+                            <a target="_blank" rel="noopener noreferrer" class="git-link" href="https://github.com/ajimenezu">
+                                <img src="/images/github.png" alt="GitHub Profile URL" class="git-img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="creators-container">
+                    <div class="creator-info-container">
+                        <div class="creator-name-container">
+                            <span class="creator-name">
+                                Stward Pérez
+                            </span>
+                        </div>
+
+                        <div class="black-bar"></div>
+
+                        <div class="creator-link-container">
+                            <a target="_blank" rel="noopener noreferrer" class="git-link" href="https://github.com/StwardPC">
+                                <img src="/images/github.png" alt="GitHub Profile URL" class="git-img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="creators-container">
+                    <div class="creator-info-container">
+                        <div class="creator-name-container">
+                            <span class="creator-name">
+                                Bryan Hernández
+                            </span>
+                        </div>
+
+                        <div class="black-bar"></div>
+
+                        <div class="creator-link-container">
+                            <a target="_blank" rel="noopener noreferrer" class="git-link" href="https://github.com/bryan2893">
+                                <img src="/images/github.png" alt="GitHub Profile URL" class="git-img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="opportunity" id="oppo-container3">
+                <button class="cool-btn" onclick="location.href='/getting_started'" type="button">
+                    Get started
+                </button>
+                    <span id="orWord">
+                        or
+                    </span> 
+                <button class="cool-btn" onclick="location.href='/signup'" type="button">
+                    Sign up
+                </button>                       
+            </div>
+        </div>
+
+
+
+<%- include('../includes/end.ejs') %>

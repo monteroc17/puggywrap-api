@@ -21,7 +21,7 @@ exports.getFunctions = async(req, res, next) => {
                 f.tags.includes(search);
         });
         res.render('functions/functions', {
-            pageTitle: 'Puggy Wrap API - Functions',
+            pageTitle: 'PuggyWrap API - Functions',
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
@@ -31,7 +31,7 @@ exports.getFunctions = async(req, res, next) => {
         // res.redirect(url.parse(req.url).pathname);
     } else {
         res.render('functions/functions', {
-            pageTitle: 'Puggy Wrap API - Functions',
+            pageTitle: 'PuggyWrap API - Functions',
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
@@ -53,7 +53,7 @@ exports.getAddFunction = async (req, res, next) => {
     }
 
     res.render('functions/add-function', {
-        pageTitle: 'Puggy Wrap API - Add Function',
+        pageTitle: 'PuggyWrap API - Add Function',
         path: '/add_function',
         isAuthenticated: req.session.isLoggedIn,
         errorMessage: '',
@@ -123,7 +123,7 @@ exports.getSingleFunction = async (req, res, _) => {
     }
 
     res.render('functions/update-function', {
-        pageTitle: 'Puggy Wrap API - Edit Function',
+        pageTitle: 'PuggyWrap API - Edit Function',
         path: '/edit_function',
         isAuthenticated: true,
         functions: functions
@@ -153,7 +153,7 @@ exports.getFunctionDetails = (req, res, next) => {
     };
 
     res.render('functions/details-function', {
-        pageTitle: 'Puggy Wrap API - Function Details',
+        pageTitle: 'PuggyWrap API - Function Details',
         path: '/details',
         isAuthenticated: true,
         funcion: funcion
