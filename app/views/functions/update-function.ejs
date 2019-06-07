@@ -1,0 +1,31 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <h1>Update Function</h1>
+    <div class="grid">
+        <form action="/admin/edit_function" method="put">
+            <div class="form-control">
+                <label for="name">Name</label><br>
+                <input type="text" name="name" id="name" value="<%= editableFunction.name %>">
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="description">Description</label><br>
+                <textarea name="description" id="description" cols="30" rows="10">
+                    <%= editableFunction.description %>
+                </textarea>
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="function_code">Function Code</label><br>
+                <textarea type="text" name="function_code" id="function_code" cols="30" rows="10">
+                    <%= version.function_code %>
+                </textarea>
+            </div>
+            <br>
+            <button class="btn" type="submit">Edit Function</button>
+        </form>
+    </div>
+    
+<%- include('../includes/end.ejs') %>
