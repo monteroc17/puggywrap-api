@@ -75,12 +75,12 @@ exports.postAddFunction = async (req, res, next) => {
         userId: req.user.id
     });
     if (!newFunction) {
-        throw new Error('An error occured while creating function!');
+        throw new Error('versionerror occured while creating function!');
     }
-    // Add tags to db table
-    // tags.forEach(async tag => {
-    //     newTag = await Tag.create({ name: tag });
-    //     if (!newTag) {
+    // Add tags to db tabversion
+    // tags.forEach(asyncversiong => {
+    //     newTag = awaitversiong.create({ name: tag });
+    //     if (!newTag) {version
     //         throw new Error('An error occured while creating tags');
     //     }
     // });
@@ -115,26 +115,26 @@ exports.postAddFunction = async (req, res, next) => {
  */
 
 exports.getEditFunction = async(req, res, _) => {
-    const id = req.body.id;
+    const id = req.params.functionID;
     const editableFunction = await ApiFunction.findOne({
         where: {id : id},
         include:[{
-            model: version,
+            model: Version,
             order:[
                 ['version', 'DESC']
             ],
             limit: 1
         }]
     });
-    if (!functions) {
+    if (!editableFunction) {
         throw new Error('Error getting the function!');
     }
-    //render Edit Page
     res.render('functions/update-function', {
         pageTitle: 'Puggy Wrap API - Edit Function',
         path: '/edit_function',
         isAuthenticated: true,
-        editableFunction: editableFunction
+        editableFunction: editableFunction,
+        version: editableFunction.versions[0]
     });
 };
 
@@ -157,22 +157,26 @@ exports.putEditFunction = async(req, res, _) => {
  * DETAILS FUNCTION
  */
 
-exports.getFunctionDetails = (req, res, next) => {
-
-    // This const variable was created just for testing a function's details view
-    const funcion =
-    {
-        id: 1,
-        name: 'A function name',
-        description: 'A description',
-        function_code: 'let a = 0;',
-        userID: req.params.functionID
-    };
-
+exports.getFunctionDetails = async (req, res, next) => {
+    const id = req.params.functionID;
+    const functionDetails = await ApiFunction.findOne({
+        where: {id : id},
+        include:[{
+            model: Version,
+            order:[
+                ['version', 'DESC']
+            ],
+            limit: 1
+        }]
+    });
+    if (!functionDetails) {
+        throw new Error('Error getting the function!');
+    }
     res.render('functions/details-function', {
         pageTitle: 'Puggy Wrap API - Function Details',
         path: '/details',
         isAuthenticated: true,
-        funcion: funcion
+        functionDetails: functionDetails,
+        version: functionDetails.versions[0]
     });
 };
