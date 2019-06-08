@@ -1,11 +1,8 @@
 <div class="backdrop"></div>
 <header class="main-header">
     <button id="side-menu-toggle">Menu</button>
-    <nav class="main-header__nav">
+    <nav class="main-header__nav">        
         <ul class="main-header__item-list">
-            <li class="main-header__item">
-                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
-            </li>
             <% if (isAuthenticated) { %>
             <li class="main-header__item">
                 <a class="<%= path === '/admin/account' ? 'active' : '' %>" href="/admin/account">My Account</a>
@@ -27,10 +24,15 @@
                 <a class="<%= path === '/getting_started' ? 'active' : '' %>" href="/getting_started">Official Docs</a>
             </li>
         </ul>
+
+        <a class="<%= path === '/' ? 'active' : '' %>" href="/home">
+            <img src="/images/homelogo.png" alt="Home" id="home-button">
+        </a>
+
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/signin">Sign In</a>
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/signin">Log In</a>
             </li>
             <li class="main-header__item">
                 <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Sign Up</a>
@@ -49,7 +51,7 @@
 <nav class="mobile-nav">
     <ul class="mobile-nav__item-list">
         <li class="mobile-nav__item">
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/home">Home</a>
         </li>
         <% if (isAuthenticated) { %>
         <li class="mobile-nav__item">
@@ -67,7 +69,7 @@
         <% } %>
         <% if (!isAuthenticated) { %>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Log In</a>
         </li>
         <li class="mobile-nav__item">
             <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
