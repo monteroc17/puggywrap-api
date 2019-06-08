@@ -1,4 +1,5 @@
 const ApiFunction = require('../models/function');
+const Version = require('../models/version');
 const User = require('../models/user');
 const Dependency = require('../models/dependency');
 
@@ -6,8 +7,17 @@ const Dependency = require('../models/dependency');
 /**
  * FUNCTIONS
  */
-exports.getFunctions = async(req, res, next) => {
-    let functions = await ApiFunction.findAll();
+exports.getFunctions = async (req, res, next) => {
+    let functions = await ApiFunction.findAll({
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1,
+            attributes: ['version', 'function_code']
+        }]
+    });
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
@@ -17,7 +27,6 @@ exports.getFunctions = async(req, res, next) => {
             return f.id == search ||
                 f.name.includes(search) ||
                 f.description.includes(search) ||
-                f.function_code.includes(search) ||
                 f.tags.includes(search);
         });
         res.render('functions/functions', {
@@ -25,6 +34,7 @@ exports.getFunctions = async(req, res, next) => {
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
+            isCreator: false,
             noFunc_msg: 'No results match your search'
         });
         // const url = require('url'); // built-in utility
@@ -35,6 +45,54 @@ exports.getFunctions = async(req, res, next) => {
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
+            isCreator: false,
+            noFunc_msg: 'There seems to be no functions yet...'
+        });
+    }
+
+};
+exports.getMyFunctions = async (req, res, next) => {
+    let functions = await ApiFunction.findAll({
+        where: {
+            userId: req.user.id
+        },
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1,
+            attributes: ['version', 'function_code']
+        }]
+    });
+    if (!functions) {
+        throw new Error('Error getting all functions!');
+    }
+    if (req.query.searchText) {
+        const search = req.query.searchText;
+        functions = functions.filter(f => {
+            return f.id == search ||
+                f.name.includes(search) ||
+                f.description.includes(search) ||
+                f.tags.includes(search);
+        });
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - My Functions',
+            path: '/my_functions',
+            isAuthenticated: req.session.isLoggedIn,
+            functions: functions,
+            isCreator: true,
+            noFunc_msg: 'No results match your search'
+        });
+        // const url = require('url'); // built-in utility
+        // res.redirect(url.parse(req.url).pathname);
+    } else {
+        res.render('functions/functions', {
+            pageTitle: 'Puggy Wrap API - My Functions',
+            path: '/functions',
+            isAuthenticated: req.session.isLoggedIn,
+            functions: functions,
+            isCreator: true,
             noFunc_msg: 'There seems to be no functions yet...'
         });
     }
@@ -47,7 +105,15 @@ exports.getFunctions = async(req, res, next) => {
 
 exports.getAddFunction = async (req, res, next) => {
     // Get Dependencies from DB
-    const dependencies = await ApiFunction.findAll();
+    const dependencies = await ApiFunction.findAll({
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1
+        }]
+    });
     if (!dependencies) {
         throw new Error('Error getting dependencies!');
     }
@@ -62,27 +128,32 @@ exports.getAddFunction = async (req, res, next) => {
 }
 
 exports.postAddFunction = async (req, res, next) => {
-    const { name, description, function_code, dependencies } = req.body;
-    let tags = req.body.tags;
-    tags = tags.replace(/\s/g, '') //.split(',');
-        //Add User function to db
-    const newFunction = await ApiFunction.create({
+    const {
         name,
         description,
         function_code,
+        dependencies
+    } = req.body;
+    let tags = req.body.tags;
+    tags = tags.replace(/\s/g, '') //.split(',');
+    //Add User function to db
+    const newFunction = await ApiFunction.create({
+        name,
+        description,
         tags,
         userId: req.user.id
     });
     if (!newFunction) {
+        throw new Error('versionerror occured while creating function!');
+    }
+    const version = await Version.create({
+        function_code,
+        version: 1,
+        functionId: newFunction.id
+    });
+    if (!version) {
         throw new Error('An error occured while creating function!');
     }
-    // Add tags to db table
-    // tags.forEach(async tag => {
-    //     newTag = await Tag.create({ name: tag });
-    //     if (!newTag) {
-    //         throw new Error('An error occured while creating tags');
-    //     }
-    // });
     //Look for dependencies
     if (dependencies) { // are there dependencies?
         if (typeof dependencies === 'array') {
@@ -113,25 +184,52 @@ exports.postAddFunction = async (req, res, next) => {
  * UPDATE FUNCTION
  */
 
-exports.getSingleFunction = async (req, res, _) => {
-    const function_code = req.body.function_code;
-    const functions = await ApiFunction.find({
-        function_code: function_code
+exports.getEditFunction = async (req, res, _) => {
+    const id = req.params.functionID;
+    const editableFunction = await ApiFunction.findOne({
+        where: {
+            id: id
+        },
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'DESC']
+            ],
+            limit: 1
+        }]
     });
-    if (!functions) {
+    if (!editableFunction) {
         throw new Error('Error getting the function!');
     }
-
     res.render('functions/update-function', {
         pageTitle: 'PuggyWrap API - Edit Function',
         path: '/edit_function',
         isAuthenticated: true,
-        functions: functions
+        editableFunction: editableFunction,
+        version: editableFunction.versions[0]
     });
 };
 
-exports.putSingleFunction = async (req, res, _) => {
-    const { name, description, function_code, dependencies } = req.body;
+exports.postEditFunction = async(req, res, _) => {
+    const { name, id, version, description, function_code } = req.body;
+    const updateFunction = await ApiFunction.update({
+        name: name,
+        description: description},
+        {where: {
+            id: id
+        }}
+        );
+    if (!updateFunction) {
+        throw new Error('versionerror occured while creating function!');
+    }
+    const newVersion = await Version.create({
+        function_code,
+        version: parseInt(version) + 1,
+        functionId: id
+    });
+    if (!newVersion) {
+        throw new Error('An error occured while creating version!');
+    }
 
     res.redirect(`/admin/function/${function_code}`);
 };
@@ -140,22 +238,30 @@ exports.putSingleFunction = async (req, res, _) => {
  * DETAILS FUNCTION
  */
 
-exports.getFunctionDetails = (req, res, next) => {
-
-    // This const variable was created just for testing a function's details view
-    const funcion =
-    {
-        id: 1,
-        name: 'A function name',
-        description: 'A description',
-        function_code: 'let a = 0;',
-        userID: req.params.functionID
-    };
-
+exports.getFunctionDetails = async (req, res, next) => {
+    const backURL=req.header('Referer') || '/admin/functions';
+    const id = req.params.functionID;
+    const functionDetails = await ApiFunction.findOne({
+        where: {
+            id: id
+        },
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'DESC']
+            ],
+            limit: 1
+        }]
+    });
+    if (!functionDetails) {
+        throw new Error('Error getting the function!');
+    }
     res.render('functions/details-function', {
         pageTitle: 'PuggyWrap API - Function Details',
         path: '/details',
+        previous_page: backURL,
         isAuthenticated: true,
-        funcion: funcion
+        functionDetails: functionDetails,
+        version: functionDetails.versions[0]
     });
 };

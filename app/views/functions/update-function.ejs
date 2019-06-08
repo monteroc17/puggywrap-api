@@ -1,36 +1,41 @@
-<%- include ('../includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 </head>
 <body>
     <%- include('../includes/navigation.ejs') %>
     <h1>Update Function</h1>
-    <%- if(error){ %>
-        <div class="user-message user-message--error">
-            <%= errorMessage %>
-        </div>
-    <% } %>
-    <% if(functions.length === 0) {%>
-        <p> Seems there is no Function to edit.. </p>
-    <% } else {%> 
-        <div class="grid">
-            <form action="/admin/add_function" method="put">
-                <div class="form-control">
-                    <label for="name"><%functions[0].name%>ame</label><br>
-                    <input type="text" name="name" id="name">
-                </div>
-                <br>
-                <div class="form-control">
-                    <label for="description"><%functions[0].description%></label><br>
-                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
-                </div>
-                <br>
-                <div class="form-control">
-                    <label for="description"><%functions[0].code</label><br>
-                    <textarea name="function_code" id="function_code" cols="30" rows="10"></textarea>
-                </div>
-                <br>
-                <button class="btn" type="submit">Edit Function</button>
-            </form>
-        </div>
-    <% } %>
+    <div class="grid">
+        <form action="/admin/edit_function" method="post">
+            <div class="form-control">
+                <label for="name">Name</label><br>
+                <input type="text" name="name" id="name" value="<%= editableFunction.name %>">
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="name">Function ID</label><br>
+                <input type="text" name="id" id="id" value="<%= editableFunction.id %>" readonly>
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="name">Version</label><br>
+                <input type="text" name="version" id="version" value="<%= version.version %>" readonly>
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="description">Description</label><br>
+                <textarea name="description" id="description" cols="30" rows="10">
+                    <%= editableFunction.description %>
+                </textarea>
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="function_code">Code</label><br>
+                <textarea type="text" name="function_code" id="function_code" cols="30" rows="10">
+                    <%= version.function_code %>
+                </textarea>
+            </div>
+            <br>
+            <button class="btn" type="submit">Edit Function</button>
+        </form>
+    </div>
     
 <%- include('../includes/end.ejs') %>

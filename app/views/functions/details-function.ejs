@@ -7,20 +7,20 @@
 
         <div class="card" style="padding: 5px">
             <h2>Name</h2>
-            <p> <%= funcion.name %> </p>
+            <p><%= functionDetails.name %></p>
             <hr>
             <h3>Description</h3>
-            <p> <%= funcion.description %> </p>
+            <p><%= functionDetails.description %></p>
             <hr>
             <h3>Author</h3>
-            <p> <%= funcion.userID %> </p>
+            <p><%= functionDetails.userId %></p>
             <hr>
             <h3>Code</h3>
-            <p>  <%= funcion.function_code %></p>
+            <p><%= version.function_code %></p>
         </div>
         <br>
         <div class="grid">
-            <a class="btn" href="/admin/functions">Back</a>
+            <a class="btn" href="<%= previous_page %>">Back</a>
             <button class="btn" type="submit">Export</button>
         </div>
         
