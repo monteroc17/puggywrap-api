@@ -7,7 +7,7 @@ const Dependency = require('../models/dependency');
 /**
  * FUNCTIONS
  */
-exports.getFunctions = async (req, res, next) => {
+exports.getFunctions = async(req, res, next) => {
     let functions = await ApiFunction.findAll({
         include: [{
             model: Version,
@@ -51,7 +51,7 @@ exports.getFunctions = async (req, res, next) => {
     }
 
 };
-exports.getMyFunctions = async (req, res, next) => {
+exports.getMyFunctions = async(req, res, next) => {
     let functions = await ApiFunction.findAll({
         where: {
             userId: req.user.id
@@ -103,7 +103,7 @@ exports.getMyFunctions = async (req, res, next) => {
  * ADD FUNCTION
  */
 
-exports.getAddFunction = async (req, res, next) => {
+exports.getAddFunction = async(req, res, next) => {
     // Get Dependencies from DB
     const dependencies = await ApiFunction.findAll({
         include: [{
@@ -127,7 +127,7 @@ exports.getAddFunction = async (req, res, next) => {
     });
 }
 
-exports.postAddFunction = async (req, res, next) => {
+exports.postAddFunction = async(req, res, next) => {
     const {
         name,
         description,
@@ -136,7 +136,7 @@ exports.postAddFunction = async (req, res, next) => {
     } = req.body;
     let tags = req.body.tags;
     tags = tags.replace(/\s/g, '') //.split(',');
-    //Add User function to db
+        //Add User function to db
     const newFunction = await ApiFunction.create({
         name,
         description,
@@ -156,22 +156,26 @@ exports.postAddFunction = async (req, res, next) => {
     }
     //Look for dependencies
     if (dependencies) { // are there dependencies?
-        if (typeof dependencies === 'array') {
+        if (Array.isArray(dependencies)) {
+            var numberDependencies = dependencies.map(Number);
             // Add dependencies to intermediate table
-            dependencies.forEach(async dependency => {
-                newDep = await Dependency.create({
-                    parent_id: newFunction.id, // get current function id
-                    dependency_id: dependency
+            numberDependencies.forEach(async dependency => {
+                const newDep = await Dependency.create({
+                    parent_id: dependency, // get current function id
+                    dependency_id: newFunction.id
                 });
+                if (!newDep) {
+                    throw new Error('An error occured while adding dependencies');
+                }
             });
         } else {
-            newDep = await Dependency.create({
-                parent_id: newFunction.id, // get current function id
-                dependency_id: dependencies
+            const newDep = await Dependency.create({
+                parent_id: dependencies, // get current function id
+                dependency_id: newFunction.id
             });
-        }
-        if (!newDep) {
-            throw new Error('An error occured while adding dependencies');
+            if (!newDep) {
+                throw new Error('An error occured while adding dependencies');
+            }
         }
     }
 
@@ -184,7 +188,7 @@ exports.postAddFunction = async (req, res, next) => {
  * UPDATE FUNCTION
  */
 
-exports.getEditFunction = async (req, res, _) => {
+exports.getEditFunction = async(req, res, _) => {
     const id = req.params.functionID;
     const editableFunction = await ApiFunction.findOne({
         where: {
@@ -214,11 +218,12 @@ exports.postEditFunction = async(req, res, _) => {
     const { name, id, version, description, function_code } = req.body;
     const updateFunction = await ApiFunction.update({
         name: name,
-        description: description},
-        {where: {
+        description: description
+    }, {
+        where: {
             id: id
-        }}
-        );
+        }
+    });
     if (!updateFunction) {
         throw new Error('versionerror occured while creating function!');
     }
@@ -238,8 +243,8 @@ exports.postEditFunction = async(req, res, _) => {
  * DETAILS FUNCTION
  */
 
-exports.getFunctionDetails = async (req, res, next) => {
-    const backURL=req.header('Referer') || '/admin/functions';
+exports.getFunctionDetails = async(req, res, next) => {
+    const backURL = req.header('Referer') || '/admin/functions';
     const id = req.params.functionID;
     const functionDetails = await ApiFunction.findOne({
         where: {
