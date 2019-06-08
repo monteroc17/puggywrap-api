@@ -10,5 +10,6 @@ router.get('/getting_started', homeController.getGetStarted);
 router.get('/download/:functionID', homeController.getFunctionFile);
 router.get('/fn-:functionID', homeController.getFunctionCode);
 router.get('/basic_import', homeController.getBasicImport);
+router.get('/home', homeController.getHomePage);
 
 module.exports = router;
