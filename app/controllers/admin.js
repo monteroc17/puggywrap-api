@@ -156,19 +156,18 @@ exports.postAddFunction = async(req, res, next) => {
     }
     //Look for dependencies
     if (dependencies) { // are there dependencies?
-        if (typeof dependencies === 'array') {
-            dependencies = dependencies.map(e => e = parseInt(e));
+        if (Array.isArray(dependencies)) { 
+            var numberDependencies = dependencies.map(Number);
             // Add dependencies to intermediate table
-            for (const dependency of dependencies) {
-                console.log(dependency);
+            numberDependencies.forEach(async dependency => {
                 const newDep = await Dependency.create({
                     parent_id: newFunction.id, // get current function id
                     dependency_id: dependency
                 });
-            };
-            if (!newDep) {
-                throw new Error('An error occured while adding dependencies');
-            }
+                if (!newDep) {
+                    throw new Error('An error occured while adding dependencies');
+                }
+            });
         } else {
             const newDep = await Dependency.create({
                 parent_id: newFunction.id, // get current function id
