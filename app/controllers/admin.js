@@ -156,13 +156,13 @@ exports.postAddFunction = async(req, res, next) => {
     }
     //Look for dependencies
     if (dependencies) { // are there dependencies?
-        if (Array.isArray(dependencies)) { 
+        if (Array.isArray(dependencies)) {
             var numberDependencies = dependencies.map(Number);
             // Add dependencies to intermediate table
             numberDependencies.forEach(async dependency => {
                 const newDep = await Dependency.create({
-                    parent_id: newFunction.id, // get current function id
-                    dependency_id: dependency
+                    parent_id: dependency, // get current function id
+                    dependency_id: newFunction.id
                 });
                 if (!newDep) {
                     throw new Error('An error occured while adding dependencies');
@@ -170,8 +170,8 @@ exports.postAddFunction = async(req, res, next) => {
             });
         } else {
             const newDep = await Dependency.create({
-                parent_id: newFunction.id, // get current function id
-                dependency_id: dependencies
+                parent_id: dependencies, // get current function id
+                dependency_id: newFunction.id
             });
             if (!newDep) {
                 throw new Error('An error occured while adding dependencies');
@@ -218,11 +218,12 @@ exports.postEditFunction = async(req, res, _) => {
     const { name, id, version, description, function_code } = req.body;
     const updateFunction = await ApiFunction.update({
         name: name,
-        description: description},
-        {where: {
+        description: description
+    }, {
+        where: {
             id: id
-        }}
-        );
+        }
+    });
     if (!updateFunction) {
         throw new Error('versionerror occured while creating function!');
     }
