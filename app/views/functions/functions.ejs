@@ -4,8 +4,17 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
 
+        <% if(isCreator) { %>
+            <h1>My Functions</h1>
+        <% } else { %>
             <h1>Functions</h1>
+        <% } %>
             <div class="searchbar">
+                <% if(isCreator) { %>
+                    <form action="/admin/my_functions" method="get">
+                <% } else { %>
+                    <form action="/admin/functions" method="get">
+                <% } %>
                 <form action="/admin/functions" method="get">
                     <input class="form-control" type="text" name="searchText" id="searchText">
                     <button type="submit"></button>
@@ -24,6 +33,9 @@
                             <p><%= element.versions[0].function_code %></p>
                             <hr>
                             <a class="btn" href="/admin/details/<%= element.id %>">See details</a>
+                            <% if(isCreator) { %>
+                                <a class="btn" href="/admin/edit_function/<%= element.id %>">Edit</a>
+                            <% } %>
                         </div>
                     <% }); %>
                 </div>
