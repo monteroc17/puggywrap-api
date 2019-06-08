@@ -23,20 +23,41 @@ exports.getGetStarted = (req, res, next) => {
 
 exports.getFunctionFile = async(req, res, next) => { //returns the function as a JS file
     const functionID = req.params.functionID;
-    const func = await ApiFunction.findByPk(functionID);
+    const func = await ApiFunction.findOne({
+        where: {
+            id: functionID
+        },
+        include: [{
+            model: Version,
+            order: [
+                ['version', 'desc']
+            ],
+            limit: 1,
+            attributes: ['version', 'function_code']
+        }]
+    });
     if (!func) {
         throw new Error('Function does not exist!');
     }
     const FILE_PATH = `${global.__basedir}/app/util/dynamic-js/${func.name}.js`;
     let stream = fs.createWriteStream(FILE_PATH, { flags: 'a' });
-    stream.write(func.function_code);
-    //include dependencies
-    stream.end();
-    res.download(FILE_PATH);
-    fs.unlink(FILE_PATH, err => {
-        if (err) throw new Error(err);
-        console.log('file deleted!');
-    });
+    recursive([], [functionID])
+        .then(data => {
+            console.log('DATA: ', func.versions[0].function_code);
+            data.forEach(element => {
+                console.log(`DEPENDENCY(${element.name}): `, element.versions[0].function_code);
+                stream.write(element.versions[0].function_code);
+            });
+            // console.log(func.versions[0].function_code);
+            stream.write(func.versions[0].function_code);
+            stream.end();
+            res.download(FILE_PATH);
+            fs.unlink(FILE_PATH, err => {
+                if (err) throw new Error(err);
+                console.log('file deleted!');
+            });
+        })
+        .catch(err => console.log(err));
 };
 exports.getFunctionCode = async(req, res, next) => { //returns the function code
     const functionID = req.params.functionID;
@@ -66,7 +87,7 @@ exports.getFunctionCode = async(req, res, next) => { //returns the function code
         .then(data => {
             console.log('DATA: ', func.versions[0].function_code);
             data.forEach(element => {
-                console.log(element.versions[0].function_code);
+                console.log(`DEPENDENCY(${element.name}): `, element.versions[0].function_code);
                 stream.write(element.versions[0].function_code);
             });
             // console.log(func.versions[0].function_code);
@@ -104,20 +125,23 @@ const recursive = async(result = new Array, IDs = new Array) => {
     }
     const id = IDs.pop();
     new_deps = await getDependencies(id);
-    console.log('RESULT SO FAR', result.map(e => e = e.id), 'IDS: ' + id);
-    return recursive(result.concat(new_deps), IDs.concat(new_deps));
+    // console.log('RESULT SO FAR', result.map(e => e = e.id), 'IDS: ' + id, 'NEW DEPENDENCIES: ' + new_deps);
+    if (typeof new_deps == 'array') {
+        console.log('ES ARRAY', new_deps);
+    }
+    return recursive(result.concat(new_deps), IDs.concat(new_deps.map(e => e = e.id)));
 }
 
 const getDependencies = (id) => {
     return new Promise(async(resolve, reject) => {
-        console.log('LOOKING FOR DEPENCIES OF', id.id);
+        // console.log('LOOKING FOR DEPENCIES OF', id);
         let promesas = [];
-        const dependencies = await Dependencies.findAll({ where: { parent_id: id } });
-        console.log('FOUND THIS DEPENDENCIES: ', dependencies.map(e => e = e.dependency_id));
+        const dependencies = await Dependencies.findAll({ where: { dependency_id: id } });
+        // console.log('FOUND THIS DEPENDENCIES: ', dependencies.map(e => e = e.parent_id));
         dependencies.forEach((d) => {
             promesas.push(ApiFunction.findOne({
                 where: {
-                    id: d.dependency_id
+                    id: d.parent_id
                 },
                 include: [{
                     model: Version,
