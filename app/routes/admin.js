@@ -12,7 +12,7 @@ router.get('/add_function', isAuth, adminController.getAddFunction);
 router.post('/add_function', isAuth, adminController.postAddFunction);
 
 router.get('/edit_function/:functionID', isAuth, adminController.getEditFunction);
-router.put('/edit_function', isAuth, adminController.putEditFunction);
+router.post('/edit_function', isAuth, adminController.postEditFunction);
 
 router.get('/details/:functionID', adminController.getFunctionDetails);
 

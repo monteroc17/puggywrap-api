@@ -210,20 +210,25 @@ exports.getEditFunction = async (req, res, _) => {
     });
 };
 
-exports.putEditFunction = async (req, res, _) => {
-    const {
-        name,
-        description,
-        function_code
-    } = req.body;
-    const newFunction = await ApiFunction.update({
+exports.postEditFunction = async(req, res, _) => {
+    const { name, id, version, description, function_code } = req.body;
+    const updateFunction = await ApiFunction.update({
         name: name,
-        description: description,
-        function_code: function_code
+        description: description},
+        {where: {
+            id: id
+        }}
+        );
+    if (!updateFunction) {
+        throw new Error('versionerror occured while creating function!');
+    }
+    const newVersion = await Version.create({
+        function_code,
+        version: parseInt(version) + 1,
+        functionId: id
     });
-
-    if (!newFunction) {
-        throw new Error('An error occured while creating function!');
+    if (!newVersion) {
+        throw new Error('An error occured while creating version!');
     }
 
     res.redirect(`/admin/function/${function_code}`);
