@@ -4,10 +4,20 @@
     <%- include('../includes/navigation.ejs') %>
     <h1>Update Function</h1>
     <div class="grid">
-        <form action="/admin/edit_function" method="put">
+        <form action="/admin/edit_function" method="post">
             <div class="form-control">
                 <label for="name">Name</label><br>
                 <input type="text" name="name" id="name" value="<%= editableFunction.name %>">
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="name">Function ID</label><br>
+                <input type="text" name="id" id="id" value="<%= editableFunction.id %>" readonly>
+            </div>
+            <br>
+            <div class="form-control">
+                <label for="name">Version</label><br>
+                <input type="text" name="version" id="version" value="<%= version.version %>" readonly>
             </div>
             <br>
             <div class="form-control">
@@ -18,7 +28,7 @@
             </div>
             <br>
             <div class="form-control">
-                <label for="function_code">Function Code</label><br>
+                <label for="function_code">Code</label><br>
                 <textarea type="text" name="function_code" id="function_code" cols="30" rows="10">
                     <%= version.function_code %>
                 </textarea>
