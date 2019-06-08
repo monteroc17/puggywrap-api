@@ -59,14 +59,17 @@ exports.getFunctionCode = async(req, res, next) => { //returns the function code
     const FILE_PATH = `${global.__basedir}/app/util/dynamic-js/${func.name}.js`;
     let stream = fs.createWriteStream(FILE_PATH, { flags: 'a' });
     //include dependencies
-    getDependencies(functionID)
+    // const result = await recursive([], [functionID]);
+    // console.log('RES: ', result);
+    // getDependencies(functionID)
+    recursive([], [functionID])
         .then(data => {
-            // console.log('DATA: ', func.versions[0].function_code);
+            console.log('DATA: ', func.versions[0].function_code);
             data.forEach(element => {
                 console.log(element.versions[0].function_code);
                 stream.write(element.versions[0].function_code);
             });
-            console.log(func.versions[0].function_code);
+            // console.log(func.versions[0].function_code);
             stream.write(func.versions[0].function_code);
             stream.end();
             fs.readFile(FILE_PATH, { encoding: 'utf-8' }, (err, data) => {
@@ -95,11 +98,22 @@ exports.getBasicImport = (req, res, next) => {
     });
 }
 
+const recursive = async(result = new Array, IDs = new Array) => {
+    if (!IDs || IDs.length === 0) {
+        return result;
+    }
+    const id = IDs.pop();
+    new_deps = await getDependencies(id);
+    console.log('RESULT SO FAR', result.map(e => e = e.id), 'IDS: ' + id);
+    return recursive(result.concat(new_deps), IDs.concat(new_deps));
+}
 
 const getDependencies = (id) => {
     return new Promise(async(resolve, reject) => {
+        console.log('LOOKING FOR DEPENCIES OF', id.id);
         let promesas = [];
         const dependencies = await Dependencies.findAll({ where: { parent_id: id } });
+        console.log('FOUND THIS DEPENDENCIES: ', dependencies.map(e => e = e.dependency_id));
         dependencies.forEach((d) => {
             promesas.push(ApiFunction.findOne({
                 where: {
@@ -114,8 +128,6 @@ const getDependencies = (id) => {
                     attributes: ['version', 'function_code']
                 }]
             }));
-            // codes.push(dependency.function_code)
-            //stream.write(dependency.function_code);
         });
         let codes = [];
         Promise.all(promesas)
