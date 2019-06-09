@@ -54,7 +54,7 @@ exports.getFunctions = async(req, res, next) => {
 exports.getMyFunctions = async(req, res, next) => {
     let functions = await ApiFunction.findAll({
         where: {
-            userId: req.user.id
+            userId: req.session.user.id
         },
         include: [{
             model: Version,
@@ -141,7 +141,7 @@ exports.postAddFunction = async(req, res, next) => {
         name,
         description,
         tags,
-        userId: req.user.id
+        userId: req.session.user.id
     });
     if (!newFunction) {
         throw new Error('versionerror occured while creating function!');
