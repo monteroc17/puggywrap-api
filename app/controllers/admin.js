@@ -251,12 +251,18 @@ exports.getFunctionDetails = async(req, res, next) => {
             id: id
         },
         include: [{
-            model: Version,
-            order: [
-                ['version', 'DESC']
-            ],
-            limit: 1
-        }]
+                model: Version,
+                order: [
+                    ['version', 'DESC']
+                ],
+                limit: 1,
+                attributes: ['version', 'function_code']
+            },
+            {
+                model: User,
+                attributes: ['name']
+            }
+        ]
     });
     if (!functionDetails) {
         throw new Error('Error getting the function!');
