@@ -12,6 +12,10 @@ exports.getHomePage = (req, res, next) => {
     });
 };
 
+exports.redirectToHome = (req, res, next) => {
+    res.redirect('/home');
+}
+
 exports.getGetStarted = (req, res, next) => {
     console.log(req.session.isLoggedIn);
     res.render('getting_started/getting_started', {
