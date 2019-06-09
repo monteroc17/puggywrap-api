@@ -24,6 +24,7 @@ exports.postSignup = async(req, res, next) => {
         if (!newUser) {
             throw new Error('Error al crear usuario!');
         }
+        req.session.user = newUser;
         res.redirect('/admin/functions');
     } else {
         res.redirect('/signin');
@@ -39,11 +40,13 @@ exports.postSignin = async(req, res, next) => {
         res.redirect('/signup');
     }
     req.session.isLoggedIn = true;
+    req.session.user = user;
     res.redirect('/admin/functions');
 };
 
 exports.postLogout = async(req, res, next) => {
     req.session.isLoggedIn = false;
+    req.session.user = null;
     console.log('in post logout', req.session.isLoggedIn);
     res.clearCookie("G_AUTHUSER_H");
     res.clearCookie("G_ENABLED_IDPS");
