@@ -117,7 +117,7 @@ exports.getMyFunctions = async(req, res, next) => {
             path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
-            isCreator: false,
+            isCreator: true,
             noFunc_msg: 'No results match your search'
         });
         // const url = require('url'); // built-in utility
