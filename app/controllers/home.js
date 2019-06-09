@@ -86,12 +86,12 @@ exports.getFunctionCode = async(req, res, next) => { //returns the function code
     recursive([], [functionID])
         .then(data => {
             console.log('DATA: ', func.versions[0].function_code);
+            stream.write(func.versions[0].function_code);
             data.forEach(element => {
                 console.log(`DEPENDENCY(${element.name}): `, element.versions[0].function_code);
                 stream.write(element.versions[0].function_code);
             });
             // console.log(func.versions[0].function_code);
-            stream.write(func.versions[0].function_code);
             stream.end();
             fs.readFile(FILE_PATH, { encoding: 'utf-8' }, (err, data) => {
                 console.log('reading...');
