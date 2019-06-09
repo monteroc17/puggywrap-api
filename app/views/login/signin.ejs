@@ -1,0 +1,41 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/google_login_style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+        function onSignIn(googleUser) {
+            let profile = googleUser.getBasicProfile();
+            const form = document.createElement('form');
+            const params = {
+                id: profile.Eea
+            };
+            form.method = 'POST';
+            form.action = '/signin';
+
+            for (const key in params) {
+                if (params.hasOwnProperty(key)) {
+                    const hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.name = key;
+                    hiddenField.value = params[key];
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+    <meta name="google-signin-client_id" content="529163245775-e6cbcsdt556lg4sgma9oruppv4gephu5.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <h1>Sign In</h1>
+            <div class="g-signin2" data-onsuccess="onSignIn">
+            </div>
+            <%- include('../includes/end.ejs') %>
+<%- include('../includes/end.ejs') %>
