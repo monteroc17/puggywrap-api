@@ -20,7 +20,7 @@ const ApiVersion = sequelize.define('version', {
     }
 });
 
-ApiVersion.belongsTo(function_code);
+ApiVersion.belongsTo(function_code, { constraints: true, onDelete: 'CASCADE' });
 function_code.hasMany(ApiVersion);
 
 module.exports = ApiVersion;
