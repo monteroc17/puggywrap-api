@@ -72,6 +72,9 @@ exports.getFunctions = async(req, res, next) => {
 };
 exports.getMyFunctions = async(req, res, next) => {
     let functions = await ApiFunction.findAll({
+        where: {
+            userId: req.session.user.id
+        },
         include: [{
                 model: Version,
                 order: [
