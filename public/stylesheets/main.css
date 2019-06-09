@@ -178,13 +178,6 @@ img#home-button:hover {
     display: none;
 }
 
-.grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: stretch;
-}
-
 .card {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
