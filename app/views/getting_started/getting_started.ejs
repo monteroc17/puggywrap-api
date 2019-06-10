@@ -56,6 +56,10 @@
                             <br>
                             &ltscript type="text/javascript" src="http://localhost:3000/basic_import"&gt&lt/script&gt
                             <br>
+                            After importing this, you'll need to call the function <b>Importar</b>, and pass as many functions as you want to import. Just use 
+                            the following format: <br>
+                            Importar([&ltid&gt,&ltversion&gt],[&ltid&gt,&ltversion&gt]...);
+
                         </p>
                         <h2>Importing the function directly</h2>
                         <p>
@@ -65,7 +69,8 @@
                             &ltscript type="text/javascript" src="http://localhost:3000/fn-02"&gt&lt/script&gt
                             <br>
                             <br>
-                            Where fn-02 is the function id, which can be seen in the Function Details page of every function. As well, you can set a Query Parameter called Version which provides you the ability to indicate what version you want to pull and in order to do this just add the following script:
+                            Where fn-02 is the function id, which can be seen in the Function Details page of every function. As well, 
+                            you can set a Query Parameter called version which provides you the ability to indicate what version of a function you want. Here's an example:
                             <br>
                             <br>
                             &ltscript type="text/javascript" src="http://localhost:3000/fn-02?version=3"&gt&lt/script&gt
