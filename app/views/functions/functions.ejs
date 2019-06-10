@@ -50,12 +50,12 @@
                                 <h2><%= element.name %></h2>
                                 <p><%= element.description %></p>
                                 <hr>
-                                <h3>Code:</h3>
-                                <p><%= element.versions[0].function_code %></p>
+                                <h3>Author:</h3>
+                                <p><%= element.user.name %></p>
                                 <hr>
                                 <a class="btn" href="/admin/details/<%= element.id %>">See details</a>
                                 <% if(isCreator) { %>
-                                    <a class="btn" href="/admin/edit_function/<%= element.id %>">Edit</a>
+                                    <a class="btn" href="/admin/edit_function/<%= element.id %>">Update</a>
                                 <% } %>
                             </div>
                         </div>
