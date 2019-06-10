@@ -1,0 +1,62 @@
+.functions-details-main-container{
+    background-color: #f3f3f3;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.functions-details-container1{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 75%;
+}
+
+.functions-details-container2{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.function-details-card{
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 75%;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.element-from-card{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.function-details-button-container{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+    width: 50%;
+}
+
+.blank-spacer-cheat{
+    color: transparent;
+}
