@@ -17,10 +17,10 @@ exports.getSignin = (req, res, next) => {
 };
 
 exports.postSignup = async(req, res, next) => {
-    const { id, name, email } = req.body;
-    const user = await User.findByPk(id);
+    const { name, email, password } = req.body;
+    const user = await User.findOne({ where: { email } });
     if (!user) {
-        const newUser = await User.create({ id, name, email, password: id });
+        const newUser = await User.create({ name, email, password });
         if (!newUser) {
             throw new Error('Error al crear usuario!');
         }
@@ -28,15 +28,15 @@ exports.postSignup = async(req, res, next) => {
         res.redirect('/admin/functions');
     } else {
         res.redirect('/signin');
-        console.log('El usuario ya existe!');
+        alert('El usuario ya existe!');
     }
 };
 
 exports.postSignin = async(req, res, next) => {
-    const id = req.body.id;
-    const user = await User.findByPk(id);
+    const { email, password } = req.body;
+    const user = await User.findOne({ where: { email, password } });
     if (!user) {
-        console.log('El usuario no existe!');
+        alert('El usuario no existe!');
         res.redirect('/signup');
     }
     req.session.isLoggedIn = true;
