@@ -40,6 +40,7 @@
             <div class="function-details-button-container">
                 <a class="btn" href="<%= previous_page %>">Back</a>
                 <button class="btn" type="submit" onclick="exportFnPopup()">Export</button>
+                <button class="btn" type="submit" onclick="versionListPopup()">Versions</button>
             </div>
             <div class="blank-spacer-cheat">
             Blank
@@ -59,6 +60,23 @@
                 <input type="text" name="id" id="fnUrl" value="68.183.100.14:8000/fn-<%= functionDetails.id %>" readonly>
                 <button class="btn" onclick="copyFnUrl()"> Copy </button>
                 <br>
+            </div>
+        </div>
+    </div>
+
+    <div id="versionListModal" class="modal">
+        <div class="lv-modal-content">
+            <div class="modal-header">
+                <span id=vl-closeSpan class="close">&times;</span>
+                <h2>Versions</h2>
+            </div>
+            <div class="modal-body">
+                <% versions.forEach(element => { %>
+                    <br>
+                    <h3>Version: <%= element.version %></h3>
+                    <p> <%= element.function_code %></p>
+                    <br>
+                <% }); %>
             </div>
         </div>
     </div>
