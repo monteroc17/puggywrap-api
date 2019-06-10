@@ -26,3 +26,9 @@ const copyFnUrl = _ => {
   url.select();
   document.execCommand('copy');
 };
+const versionListPopup = _ => {
+  let versionList = document.getElementById('versionListModal');
+  versionList.style.display = 'block';
+  var closeSpan = document.getElementById('vl-closeSpan');
+  closeSpan.onclick = _ => versionList.style.display = "none";
+}

@@ -272,14 +272,14 @@ exports.postEditFunction = async(req, res, _) => {
         throw new Error('An error occured while creating version!');
     }
 
-    res.redirect(`/admin/function/${function_code}`);
+    res.redirect(`/admin/function/${id}`);
 };
 
 /**
  * DETAILS FUNCTION
  */
 
-exports.getFunctionDetails = async(req, res, next) => {
+exports.getFunctionDetails = async(req, res, _) => {
     const backURL = req.header('Referer') || '/admin/functions';
     const id = req.params.functionID;
     const functionDetails = await ApiFunction.findOne({
@@ -303,12 +303,24 @@ exports.getFunctionDetails = async(req, res, next) => {
     if (!functionDetails) {
         throw new Error('Error getting the function!');
     }
+
+    const versions = await Version.findAll({
+        where:{
+            functionId : id
+        },
+        attributes: ['version', 'function_code']
+    });
+    if(!versions) {
+        throw new Error('Error getting the versions');
+    }
+
     res.render('functions/details-function', {
         pageTitle: 'PuggyWrap API - Function Details',
         path: '/details',
         previous_page: backURL,
         isAuthenticated: true,
         functionDetails: functionDetails,
-        version: functionDetails.versions[0]
+        version: functionDetails.versions[0],
+        versions: versions
     });
 };
