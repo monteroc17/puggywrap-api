@@ -65,19 +65,29 @@ exports.getFunctionFile = async(req, res, next) => { //returns the function as a
 };
 exports.getFunctionCode = async(req, res, next) => { //returns the function code
     const functionID = req.params.functionID;
-    const func = await ApiFunction.findOne({
-        where: {
-            id: functionID
-        },
-        include: [{
-            model: Version,
-            order: [
-                ['version', 'desc']
-            ],
-            limit: 1,
-            attributes: ['version', 'function_code']
-        }]
-    });
+    const func = req.query.version ? await ApiFunction.findOne({
+            where: {
+                id: functionID
+            },
+            include: [{
+                model: Version,
+                where: { version: req.query.version },
+                attributes: ['version', 'function_code']
+            }]
+        }) :
+        await ApiFunction.findOne({
+            where: {
+                id: functionID
+            },
+            include: [{
+                model: Version,
+                order: [
+                    ['version', 'desc']
+                ],
+                limit: 1,
+                attributes: ['version', 'function_code']
+            }]
+        });
     if (!func) {
         throw new Error(`Function does not exist! id: ${functionID}`);
     }
