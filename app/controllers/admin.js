@@ -10,25 +10,44 @@ const Dependency = require('../models/dependency');
 exports.getFunctions = async(req, res, next) => {
     let functions = await ApiFunction.findAll({
         include: [{
-            model: Version,
-            order: [
-                ['version', 'desc']
-            ],
-            limit: 1,
-            attributes: ['version', 'function_code']
-        }]
+                model: Version,
+                order: [
+                    ['version', 'desc']
+                ],
+                limit: 1,
+                attributes: ['version', 'function_code']
+            },
+            {
+                model: User,
+                attributes: ['name']
+            }
+        ]
     });
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
     if (req.query.searchText) {
-        const search = req.query.searchText;
-        functions = functions.filter(f => {
-            return f.id == search ||
-                f.name.includes(search) ||
-                f.description.includes(search) ||
-                f.tags.includes(search);
-        });
+        let search = req.query.searchText;
+        if (search.includes(':')) {
+            search = search.split(':');
+            console.log(search);
+            value = search[1].toLowerCase();
+            functions = functions.filter(f => {
+                let result = '';
+                if (search[0] === 'code') result = f[search[0]].values[0].toLowerCase().includes(value);
+                else if (search[0] === 'user') result = f[search[0]].user.name.toLowerCase().includes(value);
+                else result = f[search[0]].toLowerCase().includes(value);
+                return result;
+            });
+
+        } else {
+            functions = functions.filter(f => {
+                return f.id == search ||
+                    f.name.includes(search) ||
+                    f.description.includes(search) ||
+                    f.tags.includes(search);
+            });
+        }
         res.render('functions/functions', {
             pageTitle: 'PuggyWrap API - Functions',
             path: '/functions',
@@ -57,28 +76,45 @@ exports.getMyFunctions = async(req, res, next) => {
             userId: req.session.user.id
         },
         include: [{
-            model: Version,
-            order: [
-                ['version', 'desc']
-            ],
-            limit: 1,
-            attributes: ['version', 'function_code']
-        }]
+                model: Version,
+                order: [
+                    ['version', 'desc']
+                ],
+                limit: 1,
+                attributes: ['version', 'function_code']
+            },
+            {
+                model: User,
+                attributes: ['name']
+            }
+        ]
     });
     if (!functions) {
         throw new Error('Error getting all functions!');
     }
     if (req.query.searchText) {
-        const search = req.query.searchText;
-        functions = functions.filter(f => {
-            return f.id == search ||
-                f.name.includes(search) ||
-                f.description.includes(search) ||
-                f.tags.includes(search);
-        });
+        let search = req.query.searchText;
+        if (search.includes(':')) {
+            search = search.split(':');
+            value = search[1].toLowerCase();
+            functions = functions.filter(f => {
+                let result = search[0] === 'code' ?
+                    f[search[0]].values[0].toLowerCase().includes(value) :
+                    f[search[0]].toLowerCase().includes(value);
+                return result;
+            });
+
+        } else {
+            functions = functions.filter(f => {
+                return f.id == search ||
+                    f.name.includes(search) ||
+                    f.description.includes(search) ||
+                    f.tags.includes(search);
+            });
+        }
         res.render('functions/functions', {
-            pageTitle: 'Puggy Wrap API - My Functions',
-            path: '/my_functions',
+            pageTitle: 'PuggyWrap API - Functions',
+            path: '/functions',
             isAuthenticated: req.session.isLoggedIn,
             functions: functions,
             isCreator: true,
@@ -236,14 +272,14 @@ exports.postEditFunction = async(req, res, _) => {
         throw new Error('An error occured while creating version!');
     }
 
-    res.redirect(`/admin/function/${function_code}`);
+    res.redirect(`/admin/function/${id}`);
 };
 
 /**
  * DETAILS FUNCTION
  */
 
-exports.getFunctionDetails = async(req, res, next) => {
+exports.getFunctionDetails = async(req, res, _) => {
     const backURL = req.header('Referer') || '/admin/functions';
     const id = req.params.functionID;
     const functionDetails = await ApiFunction.findOne({
@@ -251,22 +287,40 @@ exports.getFunctionDetails = async(req, res, next) => {
             id: id
         },
         include: [{
-            model: Version,
-            order: [
-                ['version', 'DESC']
-            ],
-            limit: 1
-        }]
+                model: Version,
+                order: [
+                    ['version', 'DESC']
+                ],
+                limit: 1,
+                attributes: ['version', 'function_code']
+            },
+            {
+                model: User,
+                attributes: ['name']
+            }
+        ]
     });
     if (!functionDetails) {
         throw new Error('Error getting the function!');
     }
+
+    const versions = await Version.findAll({
+        where:{
+            functionId : id
+        },
+        attributes: ['version', 'function_code']
+    });
+    if(!versions) {
+        throw new Error('Error getting the versions');
+    }
+
     res.render('functions/details-function', {
         pageTitle: 'PuggyWrap API - Function Details',
         path: '/details',
         previous_page: backURL,
         isAuthenticated: true,
         functionDetails: functionDetails,
-        version: functionDetails.versions[0]
+        version: functionDetails.versions[0],
+        versions: versions
     });
 };

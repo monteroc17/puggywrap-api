@@ -1,0 +1,11 @@
+{
+    "env": {
+        "MYSQL_DATABASE": "puggywrap",
+        "MYSQL_USER": "usr_puggywrap",
+        "MYSQL_PASSWORD": "MBR9O9AoxRjAHyRu",
+        "MYSQL_PORT": 3307,
+        "MYSQL_HOST": "leoviquez.com",
+        "HOST_PORT": 8000,
+        "IP": "68.183.100.14"
+    }
+}

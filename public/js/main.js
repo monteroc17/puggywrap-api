@@ -14,3 +14,21 @@ function menuToggleClickHandler() {
 
 backdrop.addEventListener('click', backdropClickHandler);
 menuToggle.addEventListener('click', menuToggleClickHandler);
+
+const exportFnPopup = _ => {
+  let modal = document.getElementById('myModal');
+  modal.style.display = "block";
+  var closeSpan = document.getElementById('closeSpan');
+  closeSpan.onclick = _ => modal.style.display = "none";
+}
+const copyFnUrl = _ => {
+  let url = document.getElementById('fnUrl');
+  url.select();
+  document.execCommand('copy');
+};
+const versionListPopup = _ => {
+  let versionList = document.getElementById('versionListModal');
+  versionList.style.display = 'block';
+  var closeSpan = document.getElementById('vl-closeSpan');
+  closeSpan.onclick = _ => versionList.style.display = "none";
+}

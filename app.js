@@ -32,15 +32,6 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// app.use((req, res, next) => {
-//     User.findByPk('116481658024149298998')
-//         .then(user => {
-//             req.user = user;
-//             next();
-//         })
-//         .catch(err => console.log(err));
-// });
-
 /**ROUTES */
 const homeRoutes = require('./app/routes/home');
 const adminRoutes = require('./app/routes/admin');
@@ -56,7 +47,7 @@ app.use(errorController.get404);
 sequelize.sync() //Creates tables in DB based on the models || Use {force: true} to reset all tables
     .then(result => {
         console.log('CONNECTION TO DATABASE SUCCESFUL');
-        app.listen(3000);
-        console.log('Listening on port 3000');
+        app.listen(process.env.HOST_PORT || 8000);
+        console.log(`Listening on port 8000`);
     })
     .catch(err => console.log(err));

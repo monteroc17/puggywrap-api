@@ -1,27 +1,84 @@
 <%- include('../includes/head.ejs') %>
 
-    <link rel="stylesheet" href="/stylesheets/getting_started.css">
+<link rel="stylesheet" href="/stylesheets/getting_started.css">
+<link rel="stylesheet" href="/stylesheets/details-function.css">
+<link rel="stylesheet" href="/stylesheets/functions.css">
+
 </head>
+
 <body>
     <%- include('../includes/navigation.ejs') %>
 
-        <div class="card" style="padding: 5px">
-            <h2>Name</h2>
-            <p><%= functionDetails.name %></p>
-            <hr>
-            <h3>Description</h3>
-            <p><%= functionDetails.description %></p>
-            <hr>
-            <h3>Author</h3>
-            <p><%= functionDetails.userId %></p>
-            <hr>
-            <h3>Code</h3>
-            <p><%= version.function_code %></p>
-        </div>
-        <br>
-        <div class="grid">
-            <a class="btn" href="<%= previous_page %>">Back</a>
-            <button class="btn" type="submit">Export</button>
-        </div>
+    <div class="functions-title-container">
+        <span class="functions-title">Function's Details</span>
+    </div>
+    
+    <div class="functions-details-main-container">
         
-<%- include('../includes/end.ejs') %>
+        <div class="functions-details-container1">
+            <div class="blank-spacer-cheat">
+            Blank
+            </div>
+            <div class="function-details-card">
+                <h2 class="element-from-card">Name</h2>
+                <p class="element-from-card"><%= functionDetails.name %></p>
+                
+                <h3 class="element-from-card">Description</h3>
+                <p class="element-from-card"><%= functionDetails.description %></p>
+                
+                <h3 class="element-from-card">Author</h3>
+                <p class="element-from-card"><%= functionDetails.user.name %></p>
+                
+                <h3 class="element-from-card">Code</h3>
+                <p class="element-from-card"><%= version.function_code %></p>
+            </div>
+            <div class="blank-spacer-cheat">
+            Blank
+            </div>
+        </div>
+        <div class="functions-details-container2">
+            <div class="function-details-button-container">
+                <a class="btn" href="<%= previous_page %>">Back</a>
+                <button class="btn" type="submit" onclick="exportFnPopup()">Export</button>
+                <button class="btn" type="submit" onclick="versionListPopup()">Versions</button>
+            </div>
+            <div class="blank-spacer-cheat">
+            Blank
+            </div>
+        </div>
+    </div>
+    <!-- EXPORT POPUP -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span id=closeSpan class="close">&times;</span>
+                <h2>Export Function</h2>
+            </div>
+            <div class="modal-body">
+                <br>
+                <label for="name">URL:</label><br>
+                <input type="text" name="id" id="fnUrl" value="68.183.100.14:8000/fn-<%= functionDetails.id %>" readonly>
+                <button class="btn" onclick="copyFnUrl()"> Copy </button>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <div id="versionListModal" class="modal">
+        <div class="lv-modal-content">
+            <div class="modal-header">
+                <span id=vl-closeSpan class="close">&times;</span>
+                <h2>Versions</h2>
+            </div>
+            <div class="modal-body">
+                <% versions.forEach(element => { %>
+                    <br>
+                    <h3>Version: <%= element.version %></h3>
+                    <p> <%= element.function_code %></p>
+                    <br>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../includes/end.ejs') %>
