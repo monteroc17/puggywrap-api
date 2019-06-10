@@ -48,6 +48,6 @@ sequelize.sync() //Creates tables in DB based on the models || Use {force: true}
     .then(result => {
         console.log('CONNECTION TO DATABASE SUCCESFUL');
         app.listen(process.env.HOST_PORT || 80);
-        console.log(`Listening on port 8000`);
+        console.log(`Listening on port 80`);
     })
     .catch(err => console.log(err));
