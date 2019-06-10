@@ -25,6 +25,7 @@ exports.postSignup = async(req, res, next) => {
             throw new Error('Error al crear usuario!');
         }
         req.session.user = newUser;
+        req.session.isLoggedIn = true;
         res.redirect('/admin/functions');
     } else {
         res.redirect('/signin');

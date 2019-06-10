@@ -2,34 +2,35 @@
     <link rel="stylesheet" href="/stylesheets/functions.css">
     <link rel="stylesheet" href="/stylesheets/add-function.css">
     <link rel="stylesheet" href="/stylesheets/login-signup.css">
-</head>
-<body>
-    <%- include('../includes/navigation.ejs') %>
-    <div class="functions-title-container">
-        <span class="functions-title">Log In</span>
-    </div>
-    <div class="login-form-container">
-        <form id="form-container" action="/admin/edit_function" method="post">
-            <div class="blank-spacer">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <div class="functions-title-container">
+                <span class="functions-title">Log In</span>
             </div>
-            <div class="add-form">
-                <label class="add-form-element" for="email">Email Adress</label>
-                <input class="add-form-element" type="text" name="email" id="email" placeholder="Type email address...">
+            <div class="login-form-container">
+                <form id="form-container" action="/signin" method="post">
+                    <div class="blank-spacer">
+                    </div>
+                    <div class="add-form">
+                        <label class="add-form-element" for="email">Email Adress</label>
+                        <input class="add-form-element" type="text" name="email" id="email" placeholder="Type email address...">
+                    </div>
+                    <div class="blank-spacer-2">
+                    </div>
+                    <div class="add-form">
+                        <label class="add-form-element" for="password">Password</label>
+                        <input class="add-form-element" type="password" name="password" id="password" placeholder="Type password...">
+                    </div>
+                    <div class="blank-spacer-2">
+                    </div>
+                    <div class="add-form" id="add-function-button-container">
+                        <button class="btn" id="login-button" type="submit">Next</button>
+                    </div>
+                    <div class="blank-spacer">
+                    </div>
+                </form>
             </div>
-            <div class="blank-spacer-2">
-            </div>
-            <div class="add-form">
-                <label class="add-form-element" for="password">Password</label>
-                <input class="add-form-element" type="text" name="password" id="password" placeholder="Type password...">
-            </div>
-            <div class="blank-spacer-2">
-            </div>
-            <div class="add-form" id="add-function-button-container">
-                <button class="btn" id="login-button" type="submit">Next</button>
-            </div>
-            <div class="blank-spacer">
-            </div>
-        </form>
-    </div>
-    
-<%- include('../includes/end.ejs') %>
+
+            <%- include('../includes/end.ejs') %>
