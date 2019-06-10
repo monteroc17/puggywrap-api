@@ -5,7 +5,7 @@
         "MYSQL_PASSWORD": "MBR9O9AoxRjAHyRu",
         "MYSQL_PORT": 3307,
         "MYSQL_HOST": "leoviquez.com",
-        "HOST_PORT": 8000,
+        "HOST_PORT": 80,
         "IP": "68.183.100.14"
     }
 }

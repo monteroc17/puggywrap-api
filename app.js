@@ -47,7 +47,7 @@ app.use(errorController.get404);
 sequelize.sync() //Creates tables in DB based on the models || Use {force: true} to reset all tables
     .then(result => {
         console.log('CONNECTION TO DATABASE SUCCESFUL');
-        app.listen(process.env.HOST_PORT || 8000);
+        app.listen(process.env.HOST_PORT || 80);
         console.log(`Listening on port 8000`);
     })
     .catch(err => console.log(err));
