@@ -1,9 +1,8 @@
 const Sequelize = require('sequelize');
-
-const sequelize = new Sequelize('puggywrap', 'usr_puggywrap', 'MBR9O9AoxRjAHyRu', {
+const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
     dialect: 'mysql',
-    host: 'leoviquez.com',
-    port: 3307
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT
 });
 
 module.exports = sequelize;
