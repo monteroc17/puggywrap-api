@@ -1,129 +1,155 @@
 <%- include('../includes/head.ejs') %>
 
-    <link rel="stylesheet" href="/stylesheets/animations.css">
     <link rel="stylesheet" href="/stylesheets/getting_started.css">
-    
+
     <%/* These functions are meant to create a "show element" chain */%>
-    <script>
-        function delay() {
-            setTimeout(function () {
-                document.getElementById("api-name").style.visibility = "visible";
-            }, 100);
-            setTimeout(function () {
-                var elements = document.getElementsByClassName('step');
-                for(var i = 0; i < elements.length; i++) {
-                    elements[i].style.visibility = 'visible';
-                }                
-            }, 500);
-            setTimeout(function () {
-                document.getElementById("GSLogo").style.visibility = "visible";
-            }, 800);                        
-        }      
-    </script>
+        <script>
+            function delay() {
+                setTimeout(function() {
+                    document.getElementById("api-name").style.visibility = "visible";
+                }, 100);
+                setTimeout(function() {
+                    var elements = document.getElementsByClassName('step');
+                    for (var i = 0; i < elements.length; i++) {
+                        elements[i].style.visibility = 'visible';
+                    }
+                }, 500);
+                setTimeout(function() {
+                    document.getElementById("GSLogo").style.visibility = "visible";
+                }, 800);
+            }
+        </script>
 
-</head>
-<body>
-    <%- include('../includes/navigation.ejs') %>
-    <div id="main-container">
+        </head>
 
-        <div id="container1" class="card">
-            <div id="title">
-                <span class="hidden" id="api-name" onload="delay();">
+        <body>
+            <%- include('../includes/navigation.ejs') %>
+                <div id="main-container">
+
+                    <div id="container1" class="card">
+                        <div id="title">
+                            <span class="hidden" id="api-name" onload="delay();">
                     Getting started
                 </span>
-            </div>
+                        </div>
 
-            <div id="logo-container">
-                <img src="/images/puggywrap.png" alt="Puggy Wrap Logo" class="hidden" id="GSLogo" onload="delay();">
-            </div>
-        </div>
+                        <div id="logo-container">
+                            <img src="/images/puggywrap.png" alt="Puggy Wrap Logo" class="hidden" id="GSLogo" onload="delay();">
+                        </div>
+                    </div>
 
-        <div id="container2" class="card">
-            <div class="step" onload="delay();">
-                <div class="step-img-container">
-                    <img src="/images/one.png" alt="Step 1 image" class="step-img">
-                </div>
-                <div class="step-description-container">
-                    <span class="step-title">
-                        Sample
+                    <div id="container2" class="card">
+                        <div class="step" onload="delay();">
+                            <div class="step-img-container">
+                                <img src="/images/one.png" alt="Step 1 image" class="step-img">
+                            </div>
+                            <div class="step-description-container">
+                                <span class="step-title">
+                        Usage
                     </span>
-                    <span class="step-description">
+                                <span class="step-description">
+                        There are two ways of using a function in your html code:<br>
+                        <h2>Importing the basic script</h2>
+                        <p>
+                            To do this, you just need to add a script tag to your html similar to this one:
+                            <br>
+                            &ltscript type="text/javascript" src="http://localhost:3000/basic_import"&gt&lt/script&gt
+                            <br>
+                        </p>
+                        <h2>Importing the function directly</h2>
+                        <p>
+                            To import a function directly, just add it as a script in your html code like this:
+                            <br>
+                            &ltscript type="text/javascript" src="http://localhost:3000/fn-02"&gt&lt/script&gt
+                            <br>
+                            Where fn-02 is the function id, which can be seen in the Function Details page of every function.
+                        </p>
+                    </span>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-img-container">
+                                <img src="/images/two.png" alt="Step 2 image" class="step-img">
+                            </div>
+                            <div class="step-description-container">
+                                <span class="step-title">
+                        Searching Functions
+                    </span>
+                                <span class="step-description">
+                        In the <a href="/admin/functions">Functions</a> or <a href="/admin/my_functions">My Functions</a> pages, you can use the search bar 
+                        to look for specific functions. There are 2 main ways to look for functions:<br>
+                        The first way is to define a specific category that you want to look for. The categories are the following:
+                        <ul>
+                            <li>name -> Function Name</li>
+                            <li>user -> Function Creator</li>
+                            <li>code -> Function Code</li>
+                            <li>tag -> Function Tag</li>
+                            <li>description -> Function Description</li>
+                        </ul>
+                        To use them use the following format: <b>category:value</b> <br>
+                        If on the other hand, you just type a specific text, it will look for matches in the categories mentioned before.
+                    </span>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-img-container">
+                                <img src="/images/three.png" alt="Step 3 image" class="step-img">
+                            </div>
+                            <div class="step-description-container">
+                                <span class="step-title">
+                        Adding a Function
+                    </span>
+                                <span class="step-description">
                         This is a description
                     </span>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
-            <div class="step">
-                <div class="step-img-container">
-                    <img src="/images/two.png" alt="Step 2 image" class="step-img">
-                </div>
-                <div class="step-description-container">
-                    <span class="step-title">
-                        Sample
+                        <div class="step">
+                            <div class="step-img-container">
+                                <img src="/images/four.png" alt="Step 4 image" class="step-img">
+                            </div>
+                            <div class="step-description-container">
+                                <span class="step-title">
+                        Updating a Function
                     </span>
-                    <span class="step-description">
+                                <span class="step-description">
                         This is a description
                     </span>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
-            <div class="step">
-                <div class="step-img-container">
-                    <img src="/images/three.png" alt="Step 3 image" class="step-img">
-                </div>
-                <div class="step-description-container">
-                    <span class="step-title">
+                        <div class="step">
+                            <div class="step-img-container">
+                                <img src="/images/five.png" alt="Step 5 image" class="step-img">
+                            </div>
+                            <div class="step-description-container">
+                                <span class="step-title">
                         Sample
                     </span>
-                    <span class="step-description">
+                                <span class="step-description">
                         This is a description
                     </span>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
-            <div class="step">
-                <div class="step-img-container">
-                    <img src="/images/four.png" alt="Step 4 image" class="step-img">
-                </div>
-                <div class="step-description-container">
-                    <span class="step-title">
+                        <div class="step">
+                            <div class="step-img-container">
+                                <img src="/images/six.png" alt="Step 6 image" class="step-img">
+                            </div>
+                            <div class="step-description-container">
+                                <span class="step-title">
                         Sample
                     </span>
-                    <span class="step-description">
+                                <span class="step-description">
                         This is a description
                     </span>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
-            <div class="step">
-                <div class="step-img-container">
-                    <img src="/images/five.png" alt="Step 5 image" class="step-img">
-                </div>
-                <div class="step-description-container">
-                    <span class="step-title">
-                        Sample
-                    </span>
-                    <span class="step-description">
-                        This is a description
-                    </span>
-                </div>
-            </div>
+                    </div>
 
-            <div class="step">
-                <div class="step-img-container">
-                    <img src="/images/six.png" alt="Step 6 image" class="step-img">
                 </div>
-                <div class="step-description-container">
-                    <span class="step-title">
-                        Sample
-                    </span>
-                    <span class="step-description">
-                        This is a description
-                    </span>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-<%- include('../includes/end.ejs') %>
+                <%- include('../includes/end.ejs') %>
