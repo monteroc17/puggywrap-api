@@ -272,7 +272,7 @@ exports.postEditFunction = async(req, res, _) => {
         throw new Error('An error occured while creating version!');
     }
 
-    res.redirect(`/admin/function/${id}`);
+    res.redirect(`/admin/details/${id}`);
 };
 
 /**
