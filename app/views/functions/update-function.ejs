@@ -1,40 +1,55 @@
 <%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/functions.css">
+    <link rel="stylesheet" href="/stylesheets/add-function.css">
 </head>
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <h1>Update Function</h1>
-    <div class="grid">
-        <form action="/admin/edit_function" method="post">
-            <div class="form-control">
-                <label for="name">Name</label><br>
-                <input type="text" name="name" id="name" value="<%= editableFunction.name %>">
+    <div class="functions-title-container">
+        <span class="functions-title">Update Function</span>
+    </div>
+    <div class="add-form-container">
+        <form id="form-container" action="/admin/edit_function" method="post">
+            <div class="blank-spacer">
             </div>
-            <br>
-            <div class="form-control">
-                <label for="name">Function ID</label><br>
-                <input type="text" name="id" id="id" value="<%= editableFunction.id %>" readonly>
+            <div class="add-form">
+                <label class="add-form-element" for="name">Name</label>
+                <input class="add-form-element" type="text" name="name" id="name" placeholder="Type a name..." value="<%= editableFunction.name %>">
             </div>
-            <br>
-            <div class="form-control">
-                <label for="name">Version</label><br>
-                <input type="text" name="version" id="version" value="<%= version.version %>" readonly>
+            <div class="blank-spacer-2">
             </div>
-            <br>
-            <div class="form-control">
-                <label for="description">Description</label><br>
-                <textarea name="description" id="description" cols="30" rows="10">
+            <div class="add-form">
+                <label class="add-form-element" for="name">Function ID</label>
+                <input class="add-form-element" type="text" name="id" id="id" value="<%= editableFunction.id %>" readonly>
+            </div>
+            <div class="blank-spacer-2">
+            </div>
+            <div class="add-form">
+                <label class="add-form-element" for="name">Version</label>
+                <input class="add-form-element" type="text" name="version" id="version" value="<%= version.version %>" readonly>
+            </div>
+            <div class="blank-spacer-2">
+            </div>
+            <div class="add-form-2">
+                <label class="add-form-element" for="description">Description</label>
+                <textarea class="add-form-element" name="description" id="description" placeholder="Type a description...">
                     <%= editableFunction.description %>
                 </textarea>
             </div>
-            <br>
-            <div class="form-control">
-                <label for="function_code">Code</label><br>
-                <textarea type="text" name="function_code" id="function_code" cols="30" rows="10">
+            <div class="blank-spacer-2">
+            </div>
+            <div class="add-form-2">
+                <label class="add-form-element" for="function_code">Code</label>
+                <textarea class="add-form-element" type="text" name="function_code" id="function_code" placeholder="Type your new code...">
                     <%= version.function_code %>
                 </textarea>
             </div>
-            <br>
-            <button class="btn" type="submit">Edit Function</button>
+            <div class="blank-spacer-2">
+            </div>
+            <div class="add-form" id="add-function-button-container">
+                <button class="btn" id="add-form-button" type="submit">Update</button>
+            </div>
+            <div class="blank-spacer">
+            </div>
         </form>
     </div>
     

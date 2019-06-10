@@ -1,45 +1,78 @@
 <%- include('../includes/head.ejs') %>
-    </head>
 
+    <link rel="stylesheet" href="/stylesheets/functions.css">
+
+</head>
     <body>
         <%- include('../includes/navigation.ejs') %>
 
         <% if(isCreator) { %>
-            <h1>My Functions</h1>
+            <div class="functions-title-container">
+                <span class="functions-title">My Functions</span>
+            </div>
+            
         <% } else { %>
-            <h1>Functions</h1>
+            <div class="functions-title-container">
+                <span class="functions-title">Public Functions</span>
+            </div>
         <% } %>
-            <div class="searchbar">
+            <div class="search-function-container">
                 <% if(isCreator) { %>
-                    <form action="/admin/my_functions" method="get">
+                    <form class="input-container" action="/admin/my_functions" method="get">
                 <% } else { %>
-                    <form action="/admin/functions" method="get">
+                    <form class="input-container" action="/admin/functions" method="get">
                 <% } %>
                 <form action="/admin/functions" method="get">
-                    <input class="form-control" type="text" name="searchText" id="searchText">
-                    <button type="submit"></button>
+                        <input class="form-control" type="text" name="searchText" id="searchText" placeholder="Search...">    
                 </form>
+                <div class="search-function-button-container">
+                    <% if(isCreator) { %>
+                        <a class="btn" id="search-function-button" href="/admin/my_functions">Clear</a>
+                    <% } else { %>
+                        <a class="btn" id="search-function-button" href="/admin/functions">Clear</a>
+                    <% } %>
+                </div>                  
             </div>
             <% if(functions.length === 0) {%>
-                <p>There seems to be no functions yet...</p>
+                <div class="error-container">
+                    <div class="error-img-container">
+                        <img src="/images/empty.png" alt="Error Not Found Image" class="error-img">
+                    </div>
+                    <div class="error-message-container">
+                        <span class="error-message">It seems to be no functions yet</span>
+                    </div>
+                </div>
             <% } else {%>
-                <div class="grid">
+                <div class="function-cards-container">
                     <% functions.forEach(element => { %>
-                        <div class="card" style="padding: 5px">
-                            <h2><%= element.name %></h2>
-                            <p><%= element.description %></p>
-                            <hr>
-                            <h3>Code:</h3>
-                            <p><%= element.versions[0].function_code %></p>
-                            <hr>
-                            <a class="btn" href="/admin/details/<%= element.id %>">See details</a>
-                            <% if(isCreator) { %>
-                                <a class="btn" href="/admin/edit_function/<%= element.id %>">Edit</a>
-                            <% } %>
+                        <div class="single-function-card-container">
+                            <div class="function-card" style="padding: 5px" >
+                                <h2><%= element.name %></h2>
+                                <p><%= element.description %></p>
+                                <hr>
+                                <h3>Code:</h3>
+                                <p><%= element.versions[0].function_code %></p>
+                                <hr>
+                                <a class="btn" href="/admin/details/<%= element.id %>">See details</a>
+                                <% if(isCreator) { %>
+                                    <a class="btn" href="/admin/edit_function/<%= element.id %>">Edit</a>
+                                <% } %>
+                            </div>
                         </div>
                     <% }); %>
                 </div>
             <% } %>
+        <script src="https://unpkg.com/magic-grid/dist/magic-grid.min.js"></script>
+        <script>
+            let functions_grid = new MagicGrid({
+                container: ".function-cards-container",
+                animate: true,
+                gutter: 30,
+                static: true,
+                useMin: true
+            });
 
-
-                        <%- include('../includes/end.ejs') %>
+            functions_grid.listen();
+            functions_grid.positionItems();
+        </script>             
+<%- include('../includes/end.ejs') %>

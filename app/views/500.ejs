@@ -3,7 +3,20 @@
 
 <body>
     <%- include('includes/navigation.ejs') %>
-    <h1>Some error occurred!</h1>
-    <p>But don't worry, we have at least 5 pugs currently working on the issue!</p>
+    <div class="error-container">
+        <div class="error-img-container">
+            <img src="/images/500.png" alt="Error 500 Image" class="error-img">
+        </div>
+        <div class="error-message-large-container">
+            <span class="error-message">
+                An error occurred!   
+            </span>         
+        </div>
+        <div class="error-message-large-container">
+            <span class="error-message">
+                But, fear not! We have at least 5 pugs barking at it!    
+            </span>            
+        </div>
+    </div>
 
 <%- include('includes/end.ejs') %>
